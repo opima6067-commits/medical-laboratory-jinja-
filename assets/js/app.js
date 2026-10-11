@@ -16,6 +16,7 @@
   var NAV = {
     student: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' }, { page: 'courses', label: 'My Courses', icon: 'book' },
+      { page: 'leaderboard', label: 'Quizzes & Leaderboard', icon: 'trophy' },
       { page: 'materials', label: 'Learning Materials', icon: 'file' }, { page: 'notes', label: 'Notes and Resources', icon: 'layers' },
       { page: 'exams', label: 'Examinations', icon: 'calendar' }, { page: 'results', label: 'Examination Results', icon: 'award' },
       { page: 'notifications', label: 'Notifications', icon: 'bell', badge: true }, { page: 'profile', label: 'Student Profile', icon: 'user' },
@@ -23,6 +24,7 @@
     ],
     tutor: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' }, { page: 'courses', label: 'My Assigned Courses', icon: 'book' },
+      { page: 'leaderboard', label: 'Quizzes & Leaderboard', icon: 'trophy' },
       { page: 'upload', label: 'Upload Materials', icon: 'upload' }, { page: 'manage', label: 'Manage Materials', icon: 'file' },
       { page: 'exams', label: 'Examination Information', icon: 'calendar' }, { page: 'notifications', label: 'Notifications', icon: 'bell', badge: true },
       { page: 'profile', label: 'Tutor Profile', icon: 'user' }
@@ -32,6 +34,7 @@
       { group: 'People' }, { page: 'students', label: 'Students', icon: 'cap' }, { page: 'tutors', label: 'Tutors', icon: 'users' },
       { group: 'Academics' }, { page: 'programmes', label: 'Programmes', icon: 'layers' }, { page: 'courses', label: 'Courses', icon: 'book' }, { page: 'periods', label: 'Academic Periods', icon: 'clock' },
       { group: 'Examinations' }, { page: 'exams', label: 'Examinations', icon: 'calendar' }, { page: 'results', label: 'Results Management', icon: 'award' }, { page: 'import', label: 'Excel Results Import', icon: 'upload' },
+      { group: 'Prizes & Challenges' }, { page: 'leaderboard', label: 'Quizzes & Disbursals', icon: 'trophy' },
       { group: 'Content and communication' }, { page: 'materials', label: 'Learning Materials', icon: 'file' }, { page: 'announcements', label: 'Announcements', icon: 'megaphone', badge: true },
       { group: 'System' }, { page: 'reports', label: 'Reports', icon: 'chart' }, { page: 'settings', label: 'System Settings', icon: 'settings' }
     ],
@@ -39,6 +42,7 @@
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { group: 'People' }, { page: 'users', label: 'Users & Roles', icon: 'users' }, { page: 'students', label: 'Students', icon: 'cap' }, { page: 'tutors', label: 'Tutors', icon: 'users' },
       { group: 'Academics' }, { page: 'programmes', label: 'Programmes', icon: 'layers' }, { page: 'courses', label: 'Courses', icon: 'book' }, { page: 'periods', label: 'Academic Periods', icon: 'clock' },
+      { group: 'Prizes & Challenges' }, { page: 'leaderboard', label: 'Quizzes & Disbursals', icon: 'trophy' },
       { group: 'System' }, { page: 'settings', label: 'System Settings', icon: 'settings' }, { page: 'announcements', label: 'Announcements', icon: 'megaphone', badge: true }
     ]
   };
@@ -59,7 +63,7 @@
     student: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'courses', label: 'Courses', icon: 'book' },
-      { page: 'materials', label: 'Materials', icon: 'file' },
+      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'exams', label: 'Exams', icon: 'calendar' },
       { page: 'results', label: 'Results', icon: 'award' },
       { page: 'notifications', label: 'Alerts', icon: 'bell', badge: true }
@@ -67,7 +71,7 @@
     tutor: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'courses', label: 'Courses', icon: 'book' },
-      { page: 'upload', label: 'Upload', icon: 'upload' },
+      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'manage', label: 'Materials', icon: 'file' },
       { page: 'exams', label: 'Exams', icon: 'calendar' },
       { page: 'notifications', label: 'Alerts', icon: 'bell', badge: true }
@@ -75,7 +79,7 @@
     registrar: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'students', label: 'Students', icon: 'cap' },
-      { page: 'courses', label: 'Courses', icon: 'book' },
+      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'results', label: 'Results', icon: 'award' },
       { page: 'import', label: 'Import', icon: 'upload' },
       { page: 'announcements', label: 'News', icon: 'megaphone', badge: true }
@@ -83,7 +87,7 @@
     admin: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'users', label: 'Users', icon: 'users' },
-      { page: 'students', label: 'Students', icon: 'cap' },
+      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'courses', label: 'Courses', icon: 'book' },
       { page: 'settings', label: 'Settings', icon: 'settings' },
       { page: 'announcements', label: 'News', icon: 'megaphone', badge: true }
@@ -365,6 +369,43 @@
       var announcements = Store.state.announcements || [];
       var rows = announcements.slice(0, 8).map(function (a) { return [a.title || 'Announcement', a.date || '', a.target || 'All']; });
       return pageHead('Announcements', 'Communication records and class-wide updates.') + adminTable('Announcements log', ['Title', 'Date', 'Audience'], rows || [['No announcements available', '', '']]);
+    }
+  });
+
+  /* ---------- Quiz & Leaderboard Routes ---------- */
+  defineRoute('student', 'leaderboard', {
+    title: 'Quizzes & Leaderboard',
+    nav: 'leaderboard',
+    render: function (param, user) {
+      return MLS.QuizViews ? MLS.QuizViews.renderLeaderboardView(param, user) : '<div class="card card-pad">Loading quizzes...</div>';
+    }
+  });
+  defineRoute('student', 'quiz', {
+    title: 'Clinical Quiz Challenge',
+    nav: 'leaderboard',
+    render: function (param, user) {
+      return MLS.QuizViews ? MLS.QuizViews.renderQuizPlayer(param, user) : '<div class="card card-pad">Loading quiz...</div>';
+    }
+  });
+  defineRoute('tutor', 'leaderboard', {
+    title: 'Quizzes & Student Leaderboard',
+    nav: 'leaderboard',
+    render: function (param, user) {
+      return MLS.QuizViews ? MLS.QuizViews.renderLeaderboardView(param, user) : '<div class="card card-pad">Loading quizzes...</div>';
+    }
+  });
+  defineRoute('registrar', 'leaderboard', {
+    title: 'Quizzes & Prize Disbursals',
+    nav: 'leaderboard',
+    render: function (param, user) {
+      return MLS.QuizViews ? MLS.QuizViews.renderRegistrarLeaderboard(param, user) : '<div class="card card-pad">Loading prize disbursals...</div>';
+    }
+  });
+  defineRoute('admin', 'leaderboard', {
+    title: 'Quizzes & Prize Disbursals',
+    nav: 'leaderboard',
+    render: function (param, user) {
+      return MLS.QuizViews ? MLS.QuizViews.renderRegistrarLeaderboard(param, user) : '<div class="card card-pad">Loading prize disbursals...</div>';
     }
   });
 

@@ -41,9 +41,23 @@
       (avg !== null ? '<div class="ring-wrap"><div class="ring" style="--p:' + avg + '" role="img" aria-label="Average of published results: ' + avg + ' percent"><span>' + avg + '%</span></div><div>Average of your<br>published results</div></div>' : '') + '</section>';
     var stats = '<div class="grid grid-stats">' + App.statCard('book', courses.length, 'Courses this semester', '#/student/courses') + App.statCard('file', mats.length, 'Learning materials', '#/student/materials') +
       App.statCard('calendar', upcoming.length, 'Upcoming examinations', '#/student/exams') + App.statCard('award', pub.length, 'Published results', '#/student/results') + '</div>';
-    var links = [['courses', 'book', 'My courses'], ['materials', 'file', 'Materials'], ['exams', 'calendar', 'Examinations'], ['results', 'award', 'Results'], ['notifications', 'bell', 'Notifications'], ['profile', 'user', 'Profile']]
+    var links = [['courses', 'book', 'My courses'], ['leaderboard', 'trophy', 'Quizzes & Prizes'], ['materials', 'file', 'Materials'], ['exams', 'calendar', 'Examinations'], ['results', 'award', 'Results'], ['notifications', 'bell', 'Notifications'], ['profile', 'user', 'Profile']]
       .map(function (l) { return '<a class="quick-link" href="#/student/' + l[0] + '">' + icon(l[1]) + l[2] + '</a>'; }).join('');
-    return hero + '<div class="stack" style="margin-top:20px">' + stats + '<div class="quick-links">' + links + '</div>' +
+
+    var activeQuiz = MLS.Quiz ? MLS.Quiz.get('quiz_w41') : null;
+    var quizBanner = activeQuiz ? (
+      '<div class="card" style="border-left:4px solid var(--blue-500);background:linear-gradient(135deg, rgba(2,132,199,0.08), rgba(15,23,42,0.02));padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">' +
+      '<div style="display:flex;align-items:center;gap:14px"><div style="font-size:2rem">🏆</div>' +
+      '<div><div style="display:flex;align-items:center;gap:8px"><span class="badge badge-amber" style="font-weight:700">ACTIVE PRIZE QUIZ</span><span class="badge badge-green" style="font-weight:700">💵 $50 1st Place Prize</span></div>' +
+      '<strong style="font-size:1.05rem;color:var(--text);display:block;margin-top:4px">' + esc(activeQuiz.title) + '</strong>' +
+      '<span class="muted small">' + esc(activeQuiz.category) + ' &bull; ' + activeQuiz.questions.length + ' Questions &bull; Cash Prizes & Leaderboard</span></div></div>' +
+      '<div style="display:flex;gap:10px;align-items:center">' +
+      '<a class="btn btn-secondary btn-sm" href="#/student/leaderboard">' + icon('trophy') + ' Leaderboard</a>' +
+      '<a class="btn btn-primary btn-sm" href="#/student/quiz?id=' + encodeURIComponent(activeQuiz.id) + '">Take Challenge &rarr;</a>' +
+      '</div></div>'
+    ) : '';
+
+    return hero + '<div class="stack" style="margin-top:20px">' + stats + quizBanner + '<div class="quick-links">' + links + '</div>' +
       '<div class="grid grid-2"><div class="card"><div class="card-head"><h2>Recently uploaded materials</h2><a href="#/student/materials">View all</a></div>' + (mats.length ? mats.slice(0, 4).map(materialLine).join('') : UI.emptyState('No materials yet', 'Materials for your courses will appear here.')) + '</div>' +
       '<div class="card"><div class="card-head"><h2>Upcoming examinations</h2><a href="#/student/exams">View all</a></div>' + (upcoming.length ? upcoming.slice(0, 4).map(examLine).join('') : UI.emptyState('No upcoming examinations', 'Check back when the timetable is released.')) + '</div></div>' +
       '<div class="grid grid-2"><div class="card"><div class="card-head"><h2>Recently published results</h2><a href="#/student/results">View all</a></div>' +

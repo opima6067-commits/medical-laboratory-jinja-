@@ -15,6 +15,7 @@ All data is **fictional**.
 | Student | Dashboard, My Courses (search, semester filter), Course Details, Learning Materials (filter by course/type, open/download), Notes and Resources, Examinations, Results (**published only**, unpublished shown as "awaiting"), Notifications, Profile, Help |
 | Tutor | Dashboard, Assigned Courses, Course Details, Upload Materials (validation, file type/size checks), Manage Materials (edit, delete with confirmation), Examination Information, Notifications, Profile |
 | Registrar | Dashboard, Students (search/filter/add/edit/profile), Tutors (add/edit/assign courses), Courses, Programmes, Academic Periods (set active), Examinations (add/edit/delete), Results Management (review, student preview, publish/unpublish with confirmation), **Excel Results Import**, Materials Overview, Announcements, Reports (+CSV export), Profile, System Settings (reset demo data) |
+| Students, tutors, registrar | Timed clinical quizzes, weekly/monthly leaderboards and simulated prize tracking. Quiz attempts and prize records are demo data only; payouts are not real. |
 
 ### Excel results import
 1. **Select file** (.xlsx or .csv, up to 8 MB). Template and an "errors" sample are provided.

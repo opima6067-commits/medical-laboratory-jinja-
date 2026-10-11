@@ -123,9 +123,136 @@
     ];
 
     var activity = [
+      { at: iso(-1), text: 'Week 41 Haematology Challenge winner announced: Sarah Namulondo ($50 cash prize)' },
       { at: iso(-1), text: 'CAT 1 results for MLT101 and MLT102 published' },
-      { at: iso(-2), text: 'Examination timetable updated' },
+      { at: iso(-2), text: 'October Grand Laboratory Olympiad opened with $250 prize pool' },
       { at: iso(-3), text: 'Course MLT104 assigned to Dr. Amina Kyomuhendo' }
+    ];
+
+    var quizzes = [
+      {
+        id: 'quiz_w41',
+        type: 'weekly',
+        title: 'Week 41: Clinical Haematology & Cell Morphology Challenge',
+        subject: 'Haematology & Transfusion',
+        description: 'Test your diagnostic skills in peripheral blood morphology, red cell inclusion bodies, and coagulation.',
+        prizePool: '$50 Cash Prize',
+        firstPrize: 50,
+        prizeDetails: '1st Place: $50 Cash Prize + Certificate of Excellence',
+        durationMinutes: 10,
+        startDate: iso(-2),
+        endDate: iso(5),
+        status: 'Active',
+        questions: [
+          {
+            id: 'q1',
+            text: 'Which erythrocyte inclusion body is composed of aggregated ribosomal RNA and produces punctate staining on Romanowsky stains?',
+            options: ['Basophilic stippling', 'Howell-Jolly bodies', 'Pappenheimer bodies', 'Heinz bodies'],
+            correct: 0,
+            explanation: 'Basophilic stippling consists of aggregated ribosomal RNA and is characteristically observed in lead toxicity and thalassemias.'
+          },
+          {
+            id: 'q2',
+            text: 'A peripheral blood film reveals marked macro-ovalocytes, hypersegmented neutrophils (≥ 6 lobes), and pancytopenia. What is the primary diagnosis to investigate?',
+            options: ['Iron deficiency anemia', 'Megaloblastic anemia (Vitamin B12 / Folate deficiency)', 'Aplastic anemia', 'Sickle cell disease'],
+            correct: 1,
+            explanation: 'Hypersegmented neutrophils along with oval macrocytes are classic hallmarks of impaired DNA synthesis seen in megaloblastic anemia.'
+          },
+          {
+            id: 'q3',
+            text: 'In the coagulation cascade, which enzyme complex directly cleaves prothrombin into thrombin?',
+            options: ['Factor Xa, Factor Va, Phospholipid and Calcium (Prothrombinase)', 'Factor VIIa and Tissue Factor', 'Factor XIIa and HMWK', 'Factor IXa and Factor VIIIa'],
+            correct: 0,
+            explanation: 'The prothrombinase complex (Factor Xa, Va, Ca2+, and phospholipid) converts prothrombin (Factor II) into thrombin.'
+          },
+          {
+            id: 'q4',
+            text: 'Which automated hematology analyzer parameter directly quantifies red blood cell size variation (anisocytosis)?',
+            options: ['MCHC', 'RDW (Red Cell Distribution Width)', 'MCV', 'Hematocrit'],
+            correct: 1,
+            explanation: 'RDW quantitatively reflects variation in red blood cell volume and distinguishes microcytic anemias.'
+          },
+          {
+            id: 'q5',
+            text: 'What morphological feature characterizes target cells (codocytes) on a stained peripheral blood film?',
+            options: ['Central area of hemoglobin surrounded by a clear ring and outer hemoglobinized rim', 'Biconcave disc with complete absence of central pallor', 'Crescentic curved cell with sharp spicules', 'Helmet-shaped fragmented erythrocyte'],
+            correct: 0,
+            explanation: 'Target cells exhibit a bullseye appearance due to an excess of cell membrane surface area relative to hemoglobin content.'
+          }
+        ]
+      },
+      {
+        id: 'quiz_m10',
+        type: 'monthly',
+        title: 'October Grand Championship: Comprehensive Laboratory Olympiad',
+        subject: 'Multi-Discipline Clinical Laboratory Sciences',
+        description: 'Monthly high-stakes championship covering Clinical Chemistry, Parasitology, Haematology, and Microbiology.',
+        prizePool: '$250 Prize Pool',
+        firstPrize: 150,
+        prizeDetails: '1st Place: $150 | 2nd Place: $70 | 3rd Place: $30 + Grand Scholar Trophy',
+        durationMinutes: 15,
+        startDate: iso(-8),
+        endDate: iso(22),
+        status: 'Active',
+        questions: [
+          {
+            id: 'mq1',
+            text: 'In clinical spectrophotometry, Beer-Lambert Law establishes that absorbance is directly proportional to:',
+            options: ['Analyte concentration and path length of the cuvette', 'Transmittance percentage and ambient temperature', 'Refractive index of the reagent blank', 'Cuvette wall thickness and light velocity'],
+            correct: 0,
+            explanation: 'A = ε·b·c; optical absorbance is linearly proportional to the concentration of absorbing substance and path length.'
+          },
+          {
+            id: 'mq2',
+            text: 'Which diagnostic stage of Plasmodium falciparum is typically visible in peripheral blood during uncomplicated malaria?',
+            options: ['Ring-form trophozoites and crescent-shaped gametocytes', 'Mature schizonts containing 24 merozoites', 'Ameboid trophozoites with Schüffner dots', 'Band-shaped trophozoites across the RBC'],
+            correct: 0,
+            explanation: 'P. falciparum trophozoite rings and crescent gametocytes circulate; schizonts sequester in deep microvasculature.'
+          },
+          {
+            id: 'mq3',
+            text: 'In urine dipstick analysis, high concentration of which reducing agent causes false-negative glucose and occult blood results?',
+            options: ['Ascorbic acid (Vitamin C)', 'Uric acid', 'Acetone', 'Sodium chloride'],
+            correct: 0,
+            explanation: 'Ascorbic acid reduces peroxide intermediates, preventing the enzymatic oxidation of chromogens on the dipstick.'
+          },
+          {
+            id: 'mq4',
+            text: 'Which biomarker has the highest clinical specificity and earliest elevation for diagnosing acute myocardial infarction?',
+            options: ['Cardiac Troponin I or T (cTnI/cTnT)', 'Aspartate Aminotransferase (AST)', 'Lactate Dehydrogenase (LDH-1)', 'Creatine Kinase BB isoenzyme'],
+            correct: 0,
+            explanation: 'Cardiac troponins are virtually specific to myocardial tissue and rise within 3 to 4 hours following injury.'
+          },
+          {
+            id: 'mq5',
+            text: 'In the clinical Gram staining technique, what is the specific role of Gram\'s iodine solution?',
+            options: ['Mordant that forms an insoluble crystal violet-iodine complex', 'Counterstain for Gram-negative organisms', 'Primary basic dye', 'Lipid-dissolving decolorizer'],
+            correct: 0,
+            explanation: 'Gram\'s iodine acts as a chemical mordant, binding crystal violet into insoluble complexes inside the peptidoglycan wall.'
+          }
+        ]
+      }
+    ];
+
+    var leaderboard = [
+      // Weekly Quiz Leaderboard (quiz_w41)
+      { id: 'lb1', quizId: 'quiz_w41', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 134, points: 980, rank: 1, prizeStatus: 'Won $50 Cash Prize', prizeAmount: 50, paid: true, date: iso(-1) },
+      { id: 'lb2', quizId: 'quiz_w41', regNo: 'MLS/26/002', studentName: 'John Ssemwanga', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 178, points: 940, rank: 2, prizeStatus: 'Silver Finalist', prizeAmount: 0, paid: false, date: iso(-1) },
+      { id: 'lb3', quizId: 'quiz_w41', regNo: 'MLS/26/003', studentName: 'Grace Nansubuga', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 192, points: 780, rank: 3, prizeStatus: 'Bronze Finalist', prizeAmount: 0, paid: false, date: iso(-2) },
+      { id: 'lb4', quizId: 'quiz_w41', regNo: 'MLS/26/004', studentName: 'Daniel Okello', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 225, points: 750, rank: 4, prizeStatus: 'Participant', prizeAmount: 0, paid: false, date: iso(-2) },
+      { id: 'lb5', quizId: 'quiz_w41', regNo: 'MLS/25/001', studentName: 'Esther Akello', score: 60, correctCount: 3, totalQuestions: 5, timeSeconds: 250, points: 580, rank: 5, prizeStatus: 'Participant', prizeAmount: 0, paid: false, date: iso(-2) },
+
+      // Monthly Grand Championship Leaderboard (quiz_m10)
+      { id: 'lbm1', quizId: 'quiz_m10', regNo: 'MLS/26/004', studentName: 'Daniel Okello', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 312, points: 990, rank: 1, prizeStatus: '$150 Grand Champion Prize (Pending Payout)', prizeAmount: 150, paid: false, date: iso(-3) },
+      { id: 'lbm2', quizId: 'quiz_m10', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 345, points: 960, rank: 2, prizeStatus: '$70 2nd Place Prize (Pending Payout)', prizeAmount: 70, paid: false, date: iso(-2) },
+      { id: 'lbm3', quizId: 'quiz_m10', regNo: 'MLS/25/002', studentName: 'Peter Mukasa', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 380, points: 810, rank: 3, prizeStatus: '$30 3rd Place Prize (Pending Payout)', prizeAmount: 30, paid: false, date: iso(-4) },
+      { id: 'lbm4', quizId: 'quiz_m10', regNo: 'MLS/26/002', studentName: 'John Ssemwanga', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 410, points: 790, rank: 4, prizeStatus: 'Honorary Mention', prizeAmount: 0, paid: false, date: iso(-3) }
+    ];
+
+    var earnings = [
+      { id: 'ern1', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', quizId: 'quiz_w41', quizTitle: 'Week 41 Haematology Challenge', amount: 50, status: 'Paid', method: 'Mobile Money (+256 772 123456)', date: iso(-1), reference: 'MM-TXN-984210' },
+      { id: 'ern2', regNo: 'MLS/26/004', studentName: 'Daniel Okello', quizId: 'quiz_m10', quizTitle: 'October Grand Championship', amount: 150, status: 'Pending Approval', method: 'Bank Transfer (Stanbic Bank)', date: iso(-3), reference: 'PENDING-REGISTRAR' },
+      { id: 'ern3', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', quizId: 'quiz_m10', quizTitle: 'October Grand Championship', amount: 70, status: 'Pending Approval', method: 'Mobile Money (+256 772 123456)', date: iso(-2), reference: 'PENDING-REGISTRAR' }
     ];
 
     return {
@@ -133,6 +260,7 @@
       settings: { activePeriodId: 'P2627S1', institutionName: 'National Institute of Medical Laboratory Sciences', maxFileMB: 5 },
       periods: periods, programmes: programmes, tutors: tutors, courses: courses, students: students,
       users: users, materials: materials, exams: exams, results: results, notifications: notifications,
+      quizzes: quizzes, leaderboard: leaderboard, earnings: earnings,
       activity: activity, readNotifs: {}
     };
   }

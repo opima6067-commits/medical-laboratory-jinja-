@@ -154,10 +154,11 @@
 /* ---- Main + Topbar ---------------------------------------------------- */
 .main {
   margin-left: var(--sidebar-w);
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   transition: margin-left 0.25s ease;
 }
 
