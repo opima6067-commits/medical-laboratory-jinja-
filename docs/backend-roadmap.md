@@ -22,7 +22,7 @@
 - Server-side checks of file type (content sniffing, not just extension) and size; malware scanning if feasible; storage quotas.
 
 ## 4. Results import
-- Server re-validates every row (same rules as `analyse()`), runs in a transaction, records who imported what and when, never auto-publishes.
+- Server re-validates every row (same rules as `analyse()` in `assets/js/import-results.js`), runs in a transaction, records who imported what and when, never auto-publishes.
 - Publishing is a distinct permission, audited, and reversible with a record of the reversal.
 
 ## 5. Audit and monitoring

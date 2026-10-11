@@ -48,43 +48,44 @@ It is a single-page app using URL hashes (`#/student/dashboard`), so it works on
 
 ## Folder structure
 ```
-index.html                  entry page (loads all scripts)
-favicon.svg
-manifest.webmanifest, sw.js   PWA manifest and offline service worker
-assets/icons/               app icons (192, 512, maskable, Apple touch)
-_headers                    optional Cloudflare Pages security headers
-assets/css/                 style.css (tokens/base), layout.css (shell), components.css
-assets/js/
-  demo-data.js              fictional seed data (replace with API later)
-  store.js                  demo state + Repo layer (the backend seam) + session helpers
-  ui.js                     icons, dialogs, toasts, forms/validation, tables, list pages, queries
-  auth-demo.js              DEMO-ONLY login (replace with real auth)
-  app.js                    router, role-based shell/navigation, login page
-  shared-views.js           course details, notifications, material open/download
-  student.js tutor.js registrar.js   role pages
-  import-results.js         Excel/CSV import workflow and validation
-  pwa.js                    install prompt, service worker lifecycle, offline app behavior
-assets/templates/           Excel template and sample-with-errors workbook
-assets/images/              logo placeholder
+index.html                  static site entry point (Cloudflare Pages root)
+_headers                    Cloudflare Pages security headers
+favicon.svg                 browser favicon
+manifest.webmanifest        PWA manifest
+sw.js                       offline service worker
+assets/
+  css/                      style.css (tokens/base), layout.css (shell), components.css
+  icons/                    app icons (192, 512, maskable, Apple touch)
+  images/                   institution logo placeholder
+  templates/                Excel template and sample-with-errors workbook
+  js/
+    demo-data.js            fictional seed data (replace with API later)
+    store.js                demo state + Repo layer (the backend seam) + session helpers
+    ui.js                   icons, dialogs, toasts, forms/validation, tables, list pages, queries
+    auth-demo.js            DEMO-ONLY login (replace with real auth)
+    app.js                  router, role-based shell/navigation, login page
+    shared-views.js         course details, notifications, material open/download
+    student.js, tutor.js, registrar.js   role pages
+    import-results.js       Excel/CSV import workflow and validation
+    pwa.js                  install prompt, service worker lifecycle, offline app behavior
 docs/                       architecture.md, backend-roadmap.md
 ```
-This differs from the suggested multi-page layout on purpose: one shell and one design system avoid duplicating the layout in ~35 HTML files and make navigation reliable on Cloudflare Pages.
+The files are grouped by purpose while the Pages entry point, manifest, service worker and headers remain at the repository root, as required for this no-build static deployment. One shell and one design system avoid duplicating the layout in ~35 HTML files.
 
 ## Run locally
 Open a terminal in the project folder and run `python3 -m http.server 8000`, then visit http://localhost:8000.
 (Opening `index.html` directly also mostly works, but a local server is recommended.)
 
-## Deploy to Cloudflare Pages (from GitHub, free)
-You can do all of this from an Android phone browser (use "Desktop site" if a page looks cramped).
-1. **GitHub repository**: sign in at github.com, tap **+ > New repository**, name it (e.g. `mls-portal-demo`), choose Public or Private, create it.
-2. **Upload files**: unzip the project on your phone, open the repository, choose **Add file > Upload files**, select the *contents* of the project folder (so `index.html` is at the repository root, with the `assets` and `docs` folders). Upload folders one at a time if your phone cannot select folders. Tap **Commit changes**.
-3. **Cloudflare Pages**: sign in at dash.cloudflare.com, go to **Workers & Pages > Create > Pages > Connect to Git**, authorise GitHub and pick the repository.
-4. **Build settings**: Framework preset **None**. Build command: *leave empty*. Build output directory: **/** (or leave blank / `.`). No environment variables.
-5. **Deploy**: tap **Save and Deploy**. When finished, open the `https://<project>.pages.dev` URL.
-6. **Update later**: edit or upload files in GitHub and commit; Cloudflare redeploys automatically in about a minute.
+## Deploy to Cloudflare Pages
+This repository is a static site and needs no build step. In the Pages project connected to this repository:
+1. Confirm the connected repository is `opima6067-commits/medical-laboratory-jinja-` and the production branch is `main`.
+2. Set the framework preset to **None**, leave the build command blank, and set the build output directory to `.` (the repository root). Leave the root directory blank.
+3. Save settings and deploy the latest commit on `main`. Pages serves `index.html` and `_headers` from the root; hash-based routes need no redirect rules.
+4. Open the project's `https://<project>.pages.dev` address and verify the portal loads. HTTPS enables the PWA service worker.
+5. Future commits pushed to `main` are deployed automatically by the Git integration.
 
 Cloudflare Pages does not provide a database, authentication or private file storage; those belong to the backend phase.
-Cloudflare's dashboard wording changes occasionally; the settings above (no framework, no build, root output) are what matter.
+If a deployment fails, check the Pages deployment log for the repository branch, root directory and output-directory settings above.
 
 ## What persists after refresh
 | Persists (this browser only, localStorage) | Does NOT persist |

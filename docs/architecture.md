@@ -4,11 +4,11 @@
 ```
 Browser
  ├─ index.html + assets/ (static files on Cloudflare Pages)
- ├─ app.js            hash router + role shell (UI-level access checks only)
- ├─ views (student / tutor / registrar / shared / import)
- ├─ ui.js             shared components + form validation
- ├─ store.js          Repo.list/get/insert/update/remove  ->  localStorage (fictional data)
- └─ auth-demo.js      fake login against demo users
+ ├─ assets/js/app.js            hash router + role shell (UI-level access checks only)
+ ├─ assets/js/{student,tutor,registrar,shared-views,import-results}.js
+ ├─ assets/js/ui.js              shared components + form validation
+ ├─ assets/js/store.js           Repo.list/get/insert/update/remove -> localStorage (fictional data)
+ └─ assets/js/auth-demo.js       fake login against demo users
 ```
 Data flow: a view calls `Repo`/`Q` helpers, builds HTML (all user text goes through `esc()`), and actions
 (`data-action` attributes) update `Repo` then call `App.refresh()`.
@@ -18,9 +18,9 @@ All reads and writes go through `MLS.Repo` (collections: users, students, tutors
 materials, exams, results, notifications) and `MLS.Auth`. In the backend phase:
 1. Replace `Repo` methods with `fetch()` calls to an API (making views async and adding loading states).
 2. Replace `Auth.login/current/logout` with the real identity provider/session.
-3. Delete `demo-data.js`, the demo users and the localStorage persistence.
+3. Delete `assets/js/demo-data.js`, the demo users and the localStorage persistence.
 4. Replace in-memory file URLs with signed download URLs from private storage.
-5. Move `analyse()` in `import-results.js` to the server (keep the browser version only for fast feedback).
+5. Move `analyse()` in `assets/js/import-results.js` to the server (keep the browser version only for fast feedback).
 
 ## Proposed target architecture
 ```
