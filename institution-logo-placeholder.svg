@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="National Institute of Medical Laboratory Sciences">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b2b5c"/>
+      <stop offset="50%" stop-color="#0a2342"/>
+      <stop offset="100%" stop-color="#051427"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outline & base -->
+  <path d="M32 3.5 L10 11.5 V28 C10 43.5 19.5 54.5 32 60.5 C44.5 54.5 54 43.5 54 28 V11.5 Z" fill="url(#shieldGrad)" stroke="#38bdf8" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Internal subtle boundary -->
+  <path d="M32 7.5 L14 14 V28 C14 41 21.8 50.8 32 56.5 C42.2 50.8 50 41 50 28 V14 Z" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <!-- Stylized Microscope & Clinical Cross -->
+  <g fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Microscope head & ocular tube -->
+    <path d="M26 17 L36 21 L32 31 L22 27 Z" fill="url(#accentGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <path d="M29 18.2 L35 20.6"/>
+    <!-- Limb and revolve arm -->
+    <path d="M23 27.5 C20 31.5 21 39 28 42"/>
+    <!-- Stage -->
+    <path d="M24 37 H38" stroke="#38bdf8" stroke-width="2.5"/>
+    <!-- Base -->
+    <path d="M20 47 H44" stroke-width="2.8"/>
+    <!-- Medical Plus Accent in corner -->
+    <path d="M38 22 V28 M35 25 H41" stroke="#38bdf8" stroke-width="2"/>
+  </g>
+</svg>
+

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "id": "/mls-portal/",
+  "name": "Medical Laboratory Sciences Portal",
+  "short_name": "MLS Portal",
+  "description": "Professional Academic & Clinical Laboratory Management Portal for students, faculty, and administrative staff.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
+  "background_color": "#071326",
+  "theme_color": "#0a2342",
+  "categories": [
+    "education",
+    "medical",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Student Dashboard",
+      "short_name": "Dashboard",
+      "description": "View active courses, attendance, and academic progress",
+      "url": "./index.html#/student/dashboard",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Examination Timetable",
+      "short_name": "Exams",
+      "description": "Check upcoming tests and examination dates",
+      "url": "./index.html#/student/exams",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Examination Results",
+      "short_name": "Results",
+      "description": "View verified academic performance and official transcripts",
+      "url": "./index.html#/student/results",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Learning Materials",
+      "short_name": "Materials",
+      "description": "Access clinical laboratory manuals, notes, and guides",
+      "url": "./index.html#/student/materials",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
+}
+
