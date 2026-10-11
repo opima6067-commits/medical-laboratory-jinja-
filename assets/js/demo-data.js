@@ -257,7 +257,7 @@
 
     return {
       version: 1,
-      settings: { activePeriodId: 'P2627S1', institutionName: 'National Institute of Medical Laboratory Sciences', maxFileMB: 5 },
+      settings: { activePeriodId: 'P2627S1', institutionName: 'Medical Laboratory Jinja', maxFileMB: 5 },
       periods: periods, programmes: programmes, tutors: tutors, courses: courses, students: students,
       users: users, materials: materials, exams: exams, results: results, notifications: notifications,
       quizzes: quizzes, leaderboard: leaderboard, earnings: earnings, moneyCurrency: 'UGX',

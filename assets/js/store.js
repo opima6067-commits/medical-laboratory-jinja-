@@ -55,8 +55,11 @@
       if (raw) {
         var s = JSON.parse(raw);
         if (s && s.version === 1 && s.courses && s.students && s.users && s.users.some(function (u) { return u.role === 'admin'; })) {
-          if (s.settings && s.settings.institutionName === 'Medical Laboratory School (Demo)') {
-            s.settings.institutionName = 'National Institute of Medical Laboratory Sciences';
+          if (s.settings && (
+            s.settings.institutionName === 'Medical Laboratory School (Demo)' ||
+            s.settings.institutionName === 'National Institute of Medical Laboratory Sciences'
+          )) {
+            s.settings.institutionName = 'Medical Laboratory Jinja';
           }
           // Seed quiz & leaderboard collections if missing from earlier session
           if (!s.quizzes || !s.leaderboard || !s.earnings) {

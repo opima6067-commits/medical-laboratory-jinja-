@@ -1,6 +1,6 @@
 /* ==========================================================================
    components.css - buttons, cards, tables, forms, dialogs, toasts, badges
-   Clinical Grade component styles for Medical Laboratory Sciences Portal
+   Clinical Grade component styles for the Medical Laboratory Jinja Portal
    ========================================================================== */
 
 /* ---- Buttons ---------------------------------------------------------- */
@@ -352,6 +352,7 @@ dialog::backdrop {
   background: linear-gradient(135deg, #091e3d 0%, #06111f 100%); color: #fff; margin-bottom: 18px;
 }
 .pwa-modal-banner img, .pwa-modal-banner svg { width: 50px; height: 50px; flex: none; }
+.pwa-modal-banner img[src$="medical-laboratory-jinja-crest.png"] { object-fit: contain; background: #fff; border-radius: 8px; }
 .pwa-step-box {
   display: flex; gap: 12px; padding: 12px 14px; background: #f8fafc; border: 1px solid var(--border);
   border-radius: var(--r-md); margin-bottom: 10px; align-items: flex-start;

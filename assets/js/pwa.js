@@ -22,7 +22,7 @@
   /* ---- Service Worker Registration & Updates ---- */
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js?v=20261011-11')
+      navigator.serviceWorker.register('sw.js?v=20261011-13')
         .then(function (reg) {
           reg.addEventListener('updatefound', function () {
             var newWorker = reg.installing;
@@ -85,9 +85,9 @@
     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     var content =
       '<div class="pwa-modal-banner">' +
-      '<img src="assets/images/institution-logo-placeholder.svg" alt="MLS Crest">' +
+      '<img src="assets/images/medical-laboratory-jinja-crest.png" alt="Medical Laboratory Jinja crest">' +
       '<div>' +
-      '<strong style="font-size:1.05rem;display:block">Install MLS Portal App</strong>' +
+      '<strong style="font-size:1.05rem;display:block">Install Medical Laboratory Jinja App</strong>' +
       '<span style="font-size:0.8rem;color:#93c5fd">Access offline, launch instantly, and get full standalone experience.</span>' +
       '</div></div>' +
       (isIOS ?
@@ -100,7 +100,7 @@
         '<div style="margin-bottom:14px;color:var(--text);font-size:0.9rem">' +
         '<p>Install this web application as a standalone desktop or mobile app without an app store:</p>' +
         '<div class="pwa-step-box"><span class="pwa-step-num">1</span><div>In Chrome or Edge, click the <strong>Install</strong> icon in the address bar (or browser menu &#8942;).</div></div>' +
-        '<div class="pwa-step-box"><span class="pwa-step-num">2</span><div>Select <strong>Install MLS Portal</strong>.</div></div>' +
+        '<div class="pwa-step-box"><span class="pwa-step-num">2</span><div>Select <strong>Install Medical Laboratory Jinja</strong>.</div></div>' +
         '<div class="pwa-step-box"><span class="pwa-step-num">3</span><div>Launch directly from your desktop, taskbar, or home screen!</div></div>' +
         '</div>'
       );

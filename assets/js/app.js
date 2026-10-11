@@ -134,10 +134,10 @@
 
     return '<div class="app" id="app-root" data-role="' + esc(user.role) + '"><a class="skip-link" href="#main">Skip to main content</a>' +
       '<aside class="sidebar" id="sidebar" aria-label="Main navigation">' +
-      '<a class="sidebar-brand" href="' + base + 'dashboard"><img src="assets/images/institution-logo-placeholder.svg" alt="Institution Crest"><div><strong>' + esc(Store.state.settings.institutionName) + '</strong><span>Academic Management Portal</span></div></a>' +
+      '<a class="sidebar-brand" href="' + base + 'dashboard"><img src="assets/images/medical-laboratory-jinja-crest.png" alt="Medical Laboratory Jinja crest"><div><strong>' + esc(Store.state.settings.institutionName) + '</strong><span>Academic Management Portal</span></div></a>' +
       '<div class="sidebar-role">' + icon('user') + '<span>Signed in as <strong>' + ROLE_LABEL[user.role] + '</strong></span></div>' +
       '<nav class="sidebar-nav" aria-label="' + ROLE_LABEL[user.role] + ' menu">' + nav + '</nav>' +
-      '<div class="sidebar-foot"><span>' + icon('flask') + ' Clinical Academic MLS</span><button type="button" class="demo-chip" data-action="demoInfo" style="font-size:0.68rem">Demo Mode</button></div></aside>' +
+      '<div class="sidebar-foot"><span>' + icon('flask') + ' Medical Laboratory Jinja</span><button type="button" class="demo-chip" data-action="demoInfo" style="font-size:0.68rem">Demo Mode</button></div></aside>' +
       '<div class="sidebar-backdrop" data-action="closeNav"></div>' +
       '<div class="main"><header class="topbar">' +
       '<button type="button" class="btn btn-icon menu-toggle" data-action="toggleNav" aria-controls="sidebar" aria-expanded="false" aria-label="Open navigation menu">' + icon('menu') + '</button>' +
@@ -165,7 +165,7 @@
     var remembered = Store.remember.get();
     document.title = 'Sign in - ' + Store.state.settings.institutionName;
     document.getElementById('app').innerHTML =
-      '<div class="login"><section class="login-brand" aria-label="About the portal"><div><img src="assets/images/institution-logo-placeholder.svg" alt="Institution Crest">' +
+      '<div class="login"><section class="login-brand" aria-label="About the portal"><div><img src="assets/images/medical-laboratory-jinja-crest.png" alt="Medical Laboratory Jinja crest">' +
       '<h1>' + esc(Store.state.settings.institutionName) + '</h1><p>Integrated academic management portal for courses, curriculum materials, clinical laboratory timetables, and official examination results.</p></div>' +
       '<ul class="login-points"><li>' + icon('check') + '<span>Role-based dashboards for Students, Faculty Tutors, Registrars &amp; Administrators</span></li><li>' + icon('check') + '<span>Offline-ready progressive web application with fast standalone installation</span></li><li>' + icon('check') + '<span>Official examination results publishing workflow with strict validation</span></li></ul>' +
       '<div style="font-size:0.8rem;color:#94a3b8;display:flex;align-items:center;gap:8px">' + icon('flask') + '<span>Clinical Laboratory Information Architecture</span></div></section>' +

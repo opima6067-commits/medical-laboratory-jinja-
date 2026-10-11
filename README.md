@@ -1,6 +1,6 @@
-# Medical Laboratory Sciences Academic Management Portal (Prototype)
+# Medical Laboratory Jinja Academic Management Portal (Prototype)
 
-A frontend-only, zero-cost demonstration of an academic portal for a medical laboratory training institution.
+A frontend-only, zero-cost demonstration of the academic portal for Medical Laboratory Jinja.
 One shared login serves **students, tutors and the registrar**; each role gets its own dashboard, menu and features.
 All data is **fictional**.
 
@@ -52,13 +52,13 @@ It is a single-page app using URL hashes (`#/student/dashboard`), so it works on
 ```
 index.html                  static site entry point (Cloudflare Pages root)
 _headers                    Cloudflare Pages security headers
-favicon.svg                 browser favicon
+favicon.png                 Medical Laboratory Jinja crest favicon
 manifest.webmanifest        PWA manifest
 sw.js                       offline service worker
 assets/
   css/                      style.css (tokens/base), layout.css (shell), components.css
-  icons/                    app icons (192, 512, maskable, Apple touch)
-  images/                   institution logo placeholder
+  icons/                    Medical Laboratory Jinja app icons (192, 512, maskable, Apple touch)
+  images/                    Medical Laboratory Jinja crest used across the portal
   templates/                Excel template and sample-with-errors workbook
   js/
     demo-data.js            fictional seed data (replace with API later)
