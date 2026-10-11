@@ -123,9 +123,9 @@
     ];
 
     var activity = [
-      { at: iso(-1), text: 'Week 41 Haematology Challenge winner announced: Sarah Namulondo ($50 cash prize)' },
+      { at: iso(-1), text: 'Week 41 Haematology Challenge winner announced: Sarah Namulondo (UGX 50,000 prize)' },
       { at: iso(-1), text: 'CAT 1 results for MLT101 and MLT102 published' },
-      { at: iso(-2), text: 'October Grand Laboratory Olympiad opened with $250 prize pool' },
+      { at: iso(-2), text: 'October Grand Laboratory Olympiad opened with a UGX 250,000 prize pool' },
       { at: iso(-3), text: 'Course MLT104 assigned to Dr. Amina Kyomuhendo' }
     ];
 
@@ -136,9 +136,9 @@
         title: 'Week 41: Clinical Haematology & Cell Morphology Challenge',
         subject: 'Haematology & Transfusion',
         description: 'Test your diagnostic skills in peripheral blood morphology, red cell inclusion bodies, and coagulation.',
-        prizePool: '$50 Cash Prize',
-        firstPrize: 50,
-        prizeDetails: '1st Place: $50 Cash Prize + Certificate of Excellence',
+        prizePool: 'UGX 50,000 first prize',
+        firstPrize: 50000,
+        prizeDetails: '1st Place: UGX 50,000 + Certificate of Excellence',
         durationMinutes: 10,
         startDate: iso(-2),
         endDate: iso(5),
@@ -187,9 +187,9 @@
         title: 'October Grand Championship: Comprehensive Laboratory Olympiad',
         subject: 'Multi-Discipline Clinical Laboratory Sciences',
         description: 'Monthly high-stakes championship covering Clinical Chemistry, Parasitology, Haematology, and Microbiology.',
-        prizePool: '$250 Prize Pool',
-        firstPrize: 150,
-        prizeDetails: '1st Place: $150 | 2nd Place: $70 | 3rd Place: $30 + Grand Scholar Trophy',
+        prizePool: 'UGX 250,000 prize pool',
+        firstPrize: 150000,
+        prizeDetails: '1st Place: UGX 150,000 | 2nd Place: UGX 70,000 | 3rd Place: UGX 30,000 + Grand Scholar Trophy',
         durationMinutes: 15,
         startDate: iso(-8),
         endDate: iso(22),
@@ -236,23 +236,23 @@
 
     var leaderboard = [
       // Weekly Quiz Leaderboard (quiz_w41)
-      { id: 'lb1', quizId: 'quiz_w41', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 134, points: 980, rank: 1, prizeStatus: 'Won $50 Cash Prize', prizeAmount: 50, paid: true, date: iso(-1) },
+      { id: 'lb1', quizId: 'quiz_w41', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 134, points: 980, rank: 1, prizeStatus: 'Won UGX 50,000 Prize', prizeAmount: 50000, paid: true, date: iso(-1) },
       { id: 'lb2', quizId: 'quiz_w41', regNo: 'MLS/26/002', studentName: 'John Ssemwanga', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 178, points: 940, rank: 2, prizeStatus: 'Silver Finalist', prizeAmount: 0, paid: false, date: iso(-1) },
       { id: 'lb3', quizId: 'quiz_w41', regNo: 'MLS/26/003', studentName: 'Grace Nansubuga', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 192, points: 780, rank: 3, prizeStatus: 'Bronze Finalist', prizeAmount: 0, paid: false, date: iso(-2) },
       { id: 'lb4', quizId: 'quiz_w41', regNo: 'MLS/26/004', studentName: 'Daniel Okello', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 225, points: 750, rank: 4, prizeStatus: 'Participant', prizeAmount: 0, paid: false, date: iso(-2) },
       { id: 'lb5', quizId: 'quiz_w41', regNo: 'MLS/25/001', studentName: 'Esther Akello', score: 60, correctCount: 3, totalQuestions: 5, timeSeconds: 250, points: 580, rank: 5, prizeStatus: 'Participant', prizeAmount: 0, paid: false, date: iso(-2) },
 
       // Monthly Grand Championship Leaderboard (quiz_m10)
-      { id: 'lbm1', quizId: 'quiz_m10', regNo: 'MLS/26/004', studentName: 'Daniel Okello', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 312, points: 990, rank: 1, prizeStatus: '$150 Grand Champion Prize (Pending Payout)', prizeAmount: 150, paid: false, date: iso(-3) },
-      { id: 'lbm2', quizId: 'quiz_m10', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 345, points: 960, rank: 2, prizeStatus: '$70 2nd Place Prize (Pending Payout)', prizeAmount: 70, paid: false, date: iso(-2) },
-      { id: 'lbm3', quizId: 'quiz_m10', regNo: 'MLS/25/002', studentName: 'Peter Mukasa', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 380, points: 810, rank: 3, prizeStatus: '$30 3rd Place Prize (Pending Payout)', prizeAmount: 30, paid: false, date: iso(-4) },
+      { id: 'lbm1', quizId: 'quiz_m10', regNo: 'MLS/26/004', studentName: 'Daniel Okello', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 312, points: 990, rank: 1, prizeStatus: 'UGX 150,000 Grand Champion Prize (Pending Payout)', prizeAmount: 150000, paid: false, date: iso(-3) },
+      { id: 'lbm2', quizId: 'quiz_m10', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', score: 100, correctCount: 5, totalQuestions: 5, timeSeconds: 345, points: 960, rank: 2, prizeStatus: 'UGX 70,000 2nd Place Prize (Pending Payout)', prizeAmount: 70000, paid: false, date: iso(-2) },
+      { id: 'lbm3', quizId: 'quiz_m10', regNo: 'MLS/25/002', studentName: 'Peter Mukasa', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 380, points: 810, rank: 3, prizeStatus: 'UGX 30,000 3rd Place Prize (Pending Payout)', prizeAmount: 30000, paid: false, date: iso(-4) },
       { id: 'lbm4', quizId: 'quiz_m10', regNo: 'MLS/26/002', studentName: 'John Ssemwanga', score: 80, correctCount: 4, totalQuestions: 5, timeSeconds: 410, points: 790, rank: 4, prizeStatus: 'Honorary Mention', prizeAmount: 0, paid: false, date: iso(-3) }
     ];
 
     var earnings = [
-      { id: 'ern1', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', quizId: 'quiz_w41', quizTitle: 'Week 41 Haematology Challenge', amount: 50, status: 'Paid', method: 'Mobile Money (+256 772 123456)', date: iso(-1), reference: 'MM-TXN-984210' },
-      { id: 'ern2', regNo: 'MLS/26/004', studentName: 'Daniel Okello', quizId: 'quiz_m10', quizTitle: 'October Grand Championship', amount: 150, status: 'Pending Approval', method: 'Bank Transfer (Stanbic Bank)', date: iso(-3), reference: 'PENDING-REGISTRAR' },
-      { id: 'ern3', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', quizId: 'quiz_m10', quizTitle: 'October Grand Championship', amount: 70, status: 'Pending Approval', method: 'Mobile Money (+256 772 123456)', date: iso(-2), reference: 'PENDING-REGISTRAR' }
+      { id: 'ern1', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', quizId: 'quiz_w41', quizTitle: 'Week 41 Haematology Challenge', amount: 50000, status: 'Paid', method: 'Mobile Money (+256 772 123456)', date: iso(-1), reference: 'MM-TXN-984210' },
+      { id: 'ern2', regNo: 'MLS/26/004', studentName: 'Daniel Okello', quizId: 'quiz_m10', quizTitle: 'October Grand Championship', amount: 150000, status: 'Pending Approval', method: 'Bank Transfer (Stanbic Bank)', date: iso(-3), reference: 'PENDING-REGISTRAR' },
+      { id: 'ern3', regNo: 'MLS/26/001', studentName: 'Sarah Namulondo', quizId: 'quiz_m10', quizTitle: 'October Grand Championship', amount: 70000, status: 'Pending Approval', method: 'Mobile Money (+256 772 123456)', date: iso(-2), reference: 'PENDING-REGISTRAR' }
     ];
 
     return {
@@ -260,7 +260,7 @@
       settings: { activePeriodId: 'P2627S1', institutionName: 'National Institute of Medical Laboratory Sciences', maxFileMB: 5 },
       periods: periods, programmes: programmes, tutors: tutors, courses: courses, students: students,
       users: users, materials: materials, exams: exams, results: results, notifications: notifications,
-      quizzes: quizzes, leaderboard: leaderboard, earnings: earnings,
+      quizzes: quizzes, leaderboard: leaderboard, earnings: earnings, moneyCurrency: 'UGX',
       activity: activity, readNotifs: {}
     };
   }

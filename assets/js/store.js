@@ -22,6 +22,33 @@
     try { localStorage.setItem(KEY, JSON.stringify(state)); return true; } catch (e) { return false; }
   }
   function fresh() { state = window.MLS_SEED_BUILDER(); persist(); return state; }
+  function migratePrizeCurrency(s) {
+    if (s.moneyCurrency === 'UGX') return;
+    var fixedPrizes = { 250: 250000, 150: 150000, 70: 70000, 50: 50000, 30: 30000 };
+    var prizeLabel = function (amount) { return 'UGX ' + fixedPrizes[amount].toLocaleString('en-UG'); };
+    (s.quizzes || []).forEach(function (q) {
+      q.prizePool = q.type === 'weekly' ? 'UGX 50,000 first prize' : 'UGX 250,000 prize pool';
+      q.firstPrize = q.type === 'weekly' ? 50000 : 150000;
+      q.prizeDetails = q.type === 'weekly' ?
+        '1st Place: UGX 50,000 + Certificate of Excellence' :
+        '1st Place: UGX 150,000 | 2nd Place: UGX 70,000 | 3rd Place: UGX 30,000 + Grand Scholar Trophy';
+    });
+    (s.leaderboard || []).forEach(function (entry) {
+      if (fixedPrizes[entry.prizeAmount]) entry.prizeAmount = fixedPrizes[entry.prizeAmount];
+      entry.prizeStatus = String(entry.prizeStatus || '').replace(/\$(50|150|70|30)\b/g, function (_, amount) {
+        return prizeLabel(Number(amount));
+      });
+    });
+    (s.earnings || []).forEach(function (entry) {
+      if (fixedPrizes[entry.amount]) entry.amount = fixedPrizes[entry.amount];
+    });
+    (s.activity || []).forEach(function (entry) {
+      entry.text = String(entry.text || '').replace(/\$(250|150|70|50|30)\b/g, function (_, amount) {
+        return prizeLabel(Number(amount));
+      });
+    });
+    s.moneyCurrency = 'UGX';
+  }
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
@@ -38,8 +65,10 @@
             s.leaderboard = s.leaderboard || freshData.leaderboard;
             s.earnings = s.earnings || freshData.earnings;
           }
+          state = s;
+          migratePrizeCurrency(state);
           persist();
-          state = s; return state;
+          return state;
         }
       }
     } catch (e) { /* fall through to fresh seed */ }
@@ -143,8 +172,8 @@
         e.rank = idx + 1;
         if (q.type === 'weekly') {
           if (e.rank === 1) {
-            e.prizeStatus = '1st Place Winner ($50 Cash Prize)';
-            e.prizeAmount = 50;
+            e.prizeStatus = '1st Place Winner (UGX 50,000 Prize)';
+            e.prizeAmount = 50000;
             if (!state.earnings.some(function (ern) { return ern.quizId === quizId && ern.regNo === e.regNo; })) {
               state.earnings.unshift({
                 id: uid('ern'),
@@ -152,7 +181,7 @@
                 studentName: e.studentName,
                 quizId: quizId,
                 quizTitle: q.title,
-                amount: 50,
+                amount: 50000,
                 status: 'Pending Approval',
                 method: 'Mobile Money (+256 772 123456)',
                 date: new Date().toISOString().slice(0, 10),
@@ -168,14 +197,14 @@
           }
         } else if (q.type === 'monthly') {
           if (e.rank === 1) {
-            e.prizeStatus = 'Grand Champion ($150 Cash Prize)';
-            e.prizeAmount = 150;
+            e.prizeStatus = 'Grand Champion (UGX 150,000 Prize)';
+            e.prizeAmount = 150000;
           } else if (e.rank === 2) {
-            e.prizeStatus = '2nd Place ($70 Cash Prize)';
-            e.prizeAmount = 70;
+            e.prizeStatus = '2nd Place (UGX 70,000 Prize)';
+            e.prizeAmount = 70000;
           } else if (e.rank === 3) {
-            e.prizeStatus = '3rd Place ($30 Cash Prize)';
-            e.prizeAmount = 30;
+            e.prizeStatus = '3rd Place (UGX 30,000 Prize)';
+            e.prizeAmount = 30000;
           } else {
             e.prizeStatus = 'Top ' + e.rank + ' Olympiad Scholar';
           }
@@ -197,7 +226,7 @@
       item.paidAt = new Date().toISOString().slice(0, 10);
       var lb = state.leaderboard.find(function (l) { return l.quizId === item.quizId && l.regNo === item.regNo; });
       if (lb) lb.paid = true;
-      Store.log('Registrar marked $' + item.amount + ' prize paid to ' + item.studentName);
+      Store.log('Admin recorded UGX ' + item.amount.toLocaleString('en-UG') + ' prize payment to ' + item.studentName);
       persist();
       return true;
     }

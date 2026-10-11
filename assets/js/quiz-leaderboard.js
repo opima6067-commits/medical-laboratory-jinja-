@@ -203,10 +203,10 @@
     }
 
     var podiumHtml =
-      '<div class="podium-wrap">' +
-      renderPodiumPillar(top2, 2, '🥈', 220, activeQuiz.type === 'monthly' ? '$70 Prize' : 'Silver Finalist') +
-      renderPodiumPillar(top1, 1, '🥇', 260, activeQuiz.type === 'monthly' ? '$150 Champion' : '$50 Cash Prize') +
-      renderPodiumPillar(top3, 3, '🥉', 190, activeQuiz.type === 'monthly' ? '$30 Prize' : 'Bronze Finalist') +
+      '<div class="podium-wrap leaderboard-podium">' +
+      renderPodiumPillar(top2, 2, '🥈', 170, activeQuiz.type === 'monthly' ? UI.formatUGX(70000) : 'Silver Finalist') +
+      renderPodiumPillar(top1, 1, '🥇', 200, activeQuiz.type === 'monthly' ? UI.formatUGX(150000) : UI.formatUGX(50000)) +
+      renderPodiumPillar(top3, 3, '🥉', 150, activeQuiz.type === 'monthly' ? UI.formatUGX(30000) : 'Bronze Finalist') +
       '</div>';
 
     // Leaderboard table
@@ -215,74 +215,64 @@
       var initials = UI.initials(e.studentName);
       var timeFormatted = Math.floor(e.timeSeconds / 60) + 'm ' + (e.timeSeconds % 60) + 's';
       var prizeBadge = e.prizeAmount > 0 ?
-        '<span class="badge badge-green">' + icon('award') + ' $' + e.prizeAmount + ' Prize (' + (e.paid ? 'Paid' : 'Pending') + ')</span>' :
+        '<span class="badge badge-green">' + icon('award') + ' ' + UI.formatUGX(e.prizeAmount) + ' (' + (e.paid ? 'Paid' : 'Pending') + ')</span>' :
         '<span class="badge badge-blue">' + esc(e.prizeStatus) + '</span>';
 
       return '<tr class="' + (isMe ? 'row-highlight' : '') + '">' +
-        '<td style="font-weight:700;width:60px;font-size:1rem"><span class="rank-num rank-' + e.rank + '">#' + e.rank + '</span></td>' +
-        '<td><div style="display:flex;align-items:center;gap:10px">' +
+        '<td data-label="Rank" style="font-weight:700;width:60px;font-size:1rem"><span class="rank-num rank-' + e.rank + '">#' + e.rank + '</span></td>' +
+        '<td data-label="Competitor"><div style="display:flex;align-items:center;gap:10px">' +
         '<span class="avatar" style="width:34px;height:34px;font-size:.78rem">' + esc(initials) + '</span>' +
         '<div><strong>' + esc(e.studentName) + '</strong>' + (isMe ? ' <span class="badge badge-amber" style="font-size:0.65rem">YOU</span>' : '') +
         '<span class="cell-sub">' + esc(e.regNo) + '</span></div></div></td>' +
-        '<td class="num"><strong>' + e.score + '%</strong><span class="cell-sub">' + e.correctCount + '/' + e.totalQuestions + ' correct</span></td>' +
-        '<td class="num">' + timeFormatted + '</td>' +
-        '<td class="num"><strong style="color:var(--blue-700)">' + e.points + '</strong></td>' +
-        '<td>' + prizeBadge + '</td>' +
+        '<td data-label="Score" class="num"><strong>' + e.score + '%</strong><span class="cell-sub">' + e.correctCount + '/' + e.totalQuestions + ' correct</span></td>' +
+        '<td data-label="Time" class="num">' + timeFormatted + '</td>' +
+        '<td data-label="Points" class="num"><strong style="color:var(--blue-700)">' + e.points + '</strong></td>' +
+        '<td data-label="Prize">' + prizeBadge + '</td>' +
         '</tr>';
     }).join('');
 
     // Student Earnings Card
     var earningsCard = user.role === 'student' ?
-      '<div class="card card-pad" style="margin-bottom:24px;background:linear-gradient(135deg,#0a1f3d 0%,#06111f 100%);color:#fff;border-color:rgba(255,255,255,0.1)">' +
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px">' +
-      '<div>' +
-      '<div class="badge badge-amber" style="margin-bottom:8px">' + icon('award') + ' Academic Quiz Wallet</div>' +
-      '<h2 style="color:#fff;font-size:1.4rem">My Prize Earnings</h2>' +
-      '<p style="color:#94a3b8;font-size:0.88rem;margin:2px 0 0">Cash prizes won from weekly clinical quizzes &amp; monthly championships.</p>' +
+      '<section class="quiz-wallet" aria-label="Prize summary">' +
+      '<div class="quiz-wallet-main">' +
+      '<span class="quiz-wallet-label">' + icon('wallet') + ' Prize wallet <span class="quiz-demo-tag">DEMO</span></span>' +
+      '<p>Prize records from weekly challenges and monthly championships.</p>' +
+      '<strong class="quiz-wallet-total">' + UI.formatUGX(totalEarnings) + '</strong>' +
+      '<span class="quiz-wallet-caption">Total recorded prizes</span>' +
       '</div>' +
-      '<div style="display:flex;gap:18px;align-items:center">' +
-      '<div style="text-align:right"><div style="font-size:1.6rem;font-weight:800;color:#38bdf8">$' + totalEarnings + ' USD</div><div style="font-size:0.75rem;color:#cbd5e1">Total Prize Money Won</div></div>' +
-      '</div></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)">' +
-      '<div><div style="font-size:0.75rem;color:#94a3b8">Paid via Mobile Money</div><div style="font-size:1.1rem;font-weight:700;color:#a7f3d0">$' + paidEarnings + '</div></div>' +
-      '<div><div style="font-size:0.75rem;color:#94a3b8">Pending Admin Payment</div><div style="font-size:1.1rem;font-weight:700;color:#fde68a">$' + pendingEarnings + '</div></div>' +
-      '<div><div style="font-size:0.75rem;color:#94a3b8">Payout Method</div><div style="font-size:0.95rem;font-weight:600;color:#e2e8f0">MTN Mobile Money</div></div>' +
-      '</div></div>' : '';
+      '<div class="quiz-wallet-details">' +
+      '<div class="quiz-wallet-detail"><span>Paid</span><strong>' + UI.formatUGX(paidEarnings) + '</strong></div>' +
+      '<div class="quiz-wallet-detail"><span>Awaiting admin</span><strong>' + UI.formatUGX(pendingEarnings) + '</strong></div>' +
+      '</div></section>' : '';
 
     var quizCtaCard = user.role === 'student' ?
-      '<div class="card card-pad" style="margin-bottom:20px;border-left:4px solid var(--blue-600);background:#f0f9ff">' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">' +
-      '<div>' +
-      '<span class="badge badge-amber">' + icon('award') + ' ' + esc(activeQuiz.prizePool) + '</span>' +
-      '<h3 style="margin-top:6px;font-size:1.15rem">' + esc(activeQuiz.title) + '</h3>' +
-      '<p class="muted small" style="margin:2px 0 0">' + esc(activeQuiz.description) + ' &bull; ' + activeQuiz.durationMinutes + ' minutes &bull; Ends in 5 days</p>' +
-      '</div>' +
-      '<div>' +
-      '<a href="#/' + user.role + '/quiz/' + activeQuiz.id + '" class="btn" style="box-shadow:0 4px 14px rgba(2,132,199,0.3)">' +
-      icon('flask') + ' Take Active Challenge Now</a>' +
-      '</div></div></div>' : '';
+      '<section class="quiz-feature">' +
+      '<div class="quiz-feature-copy"><span class="quiz-feature-label">' + icon('trophy') + ' Open challenge</span>' +
+      '<h2>' + esc(activeQuiz.title) + '</h2>' +
+      '<p>' + esc(activeQuiz.description) + '</p>' +
+      '<div class="quiz-feature-meta"><span>' + icon('clock') + ' ' + activeQuiz.durationMinutes + ' minutes</span><span>' + icon('layers') + ' ' + activeQuiz.questions.length + ' questions</span><span class="quiz-feature-prize">' + UI.formatUGX(activeQuiz.firstPrize) + ' prize</span></div></div>' +
+      '<a href="#/' + user.role + '/quiz/' + activeQuiz.id + '" class="btn quiz-feature-action">' + icon('flask') + ' Start challenge</a>' +
+      '</section>' : '';
 
-    return MLS.App.pageHead('Clinical Quiz Arena & Leadership', 'Weekly challenges and monthly olympiads with simulated prize tracking.') +
+    return MLS.App.pageHead('Quiz arena', 'Take clinical challenges, follow the live rankings, and track simulated prize records.') +
       earningsCard +
       quizCtaCard +
-      '<div class="card" style="margin-top:20px">' +
-      '<div class="card-head" style="flex-wrap:wrap;gap:12px">' +
-      '<div class="seg" role="tablist">' +
-      '<a href="#/' + user.role + '/leaderboard/weekly" class="btn btn-sm' + (activeTab === 'weekly' ? ' btn-primary" aria-pressed="true"' : ' btn-ghost"') + '>' + icon('calendar') + ' Weekly Challenge ($50 1st Prize)</a>' +
-      '<a href="#/' + user.role + '/leaderboard/monthly" class="btn btn-sm' + (activeTab === 'monthly' ? ' btn-primary" aria-pressed="true"' : ' btn-ghost"') + '>' + icon('award') + ' Monthly Olympiad ($250 Pool)</a>' +
-      '</div>' +
-      '<div style="font-size:0.8125rem;color:var(--muted)">' + icon('clock') + ' Refreshes live on every quiz completion</div>' +
-      '</div>' +
-      '<div class="card-body" style="padding-bottom:10px">' +
+      '<section class="card leaderboard-card">' +
+      '<div class="leaderboard-header"><div><span class="leaderboard-kicker">Live rankings</span><h2>' + esc(activeQuiz.type === 'monthly' ? 'Monthly championship' : 'Weekly challenge') + '</h2></div><span class="leaderboard-prize">' + UI.formatUGX(activeQuiz.type === 'monthly' ? 250000 : 50000) + ' prize pool</span></div>' +
+      '<nav class="leaderboard-tabs" aria-label="Choose leaderboard">' +
+      '<a href="#/' + user.role + '/leaderboard/weekly" class="leaderboard-tab' + (activeTab === 'weekly' ? ' is-active' : '') + '"' + (activeTab === 'weekly' ? ' aria-current="page"' : '') + '><span>Weekly</span><small>' + UI.formatUGX(50000) + ' first prize</small></a>' +
+      '<a href="#/' + user.role + '/leaderboard/monthly" class="leaderboard-tab' + (activeTab === 'monthly' ? ' is-active' : '') + '"' + (activeTab === 'monthly' ? ' aria-current="page"' : '') + '><span>Monthly</span><small>' + UI.formatUGX(250000) + ' prize pool</small></a>' +
+      '</nav>' +
+      '<div class="card-body leaderboard-body">' +
       podiumHtml +
       '</div>' +
       '<div class="table-wrap">' +
-      '<table class="table">' +
+      '<table class="table leaderboard-table">' +
       '<thead><tr>' +
       '<th>Rank</th><th>Competitor</th><th class="num">Score</th><th class="num">Time</th><th class="num">Points</th><th>Reward Status</th>' +
       '</tr></thead>' +
       '<tbody>' + (rowsHtml || '<tr><td colspan="6" class="empty">No submissions yet for this competition. Be the first!</td></tr>') + '</tbody>' +
-      '</table></div></div>';
+      '</table></div></section>';
   }
 
   /* ---------- Admin Quiz & Prize Payment Management ---------- */
@@ -300,12 +290,12 @@
       var isPaid = e.status === 'Paid';
       var payAction = isPaid ?
         '<span class="badge badge-green">' + icon('check') + ' Paid (' + esc(e.reference) + ')</span>' :
-        '<button type="button" class="btn btn-sm btn-success" data-action="disbursePrize" data-eid="' + e.id + '" data-name="' + esc(e.studentName) + '" data-amt="' + e.amount + '">' + icon('award') + ' Disburse $' + e.amount + '</button>';
+        '<button type="button" class="btn btn-sm btn-success" data-action="disbursePrize" data-eid="' + e.id + '" data-name="' + esc(e.studentName) + '" data-amt="' + e.amount + '">' + icon('award') + ' Record payment</button>';
 
       return '<tr>' +
         '<td data-label="Student"><strong>' + esc(e.studentName) + '</strong><span class="cell-sub">' + esc(e.regNo) + '</span></td>' +
         '<td data-label="Competition">' + esc(e.quizTitle) + '</td>' +
-        '<td data-label="Prize Amount" class="num"><strong style="color:var(--green-700)">$' + e.amount + ' USD</strong></td>' +
+        '<td data-label="Prize Amount" class="num"><strong style="color:var(--green-700)">' + UI.formatUGX(e.amount) + '</strong></td>' +
         '<td data-label="Destination Account">' + esc(e.method) + '</td>' +
         '<td data-label="Status">' + (isPaid ? '<span class="badge badge-green">Disbursed</span>' : '<span class="badge badge-amber">Pending Approval</span>') + '</td>' +
         '<td data-label="" class="actions">' + payAction + '</td>' +
@@ -319,7 +309,7 @@
           '<div class="admin-quiz-card-head" style="display:flex;justify-content:space-between;align-items:flex-start">' +
           '<div><span class="badge badge-blue">' + esc(q.type.toUpperCase()) + '</span>' +
           '<h3 style="margin-top:6px">' + esc(q.title) + '</h3></div>' +
-          '<div class="stat-val admin-quiz-pool" style="color:var(--green-700)">' + esc(q.prizePool) + '</div></div>' +
+          '<div class="stat-val admin-quiz-pool" style="color:var(--green-700)">' + UI.formatUGX(q.type === 'weekly' ? 50000 : 250000) + '</div></div>' +
           '<p class="muted small" style="margin:8px 0 12px">' + esc(q.description) + '</p>' +
           '<div style="display:flex;justify-content:space-between;align-items:center">' +
           '<span class="small muted">' + q.questions.length + ' questions &bull; ' + q.durationMinutes + ' mins</span>' +
@@ -377,7 +367,7 @@
         return;
       }
       var promptHtml =
-        '<p>Confirm scholarship prize disbursal of <strong>$' + esc(d.amt) + ' USD</strong> to <strong>' + esc(d.name) + '</strong>.</p>' +
+        '<p>Record a simulated prize payment of <strong>' + UI.formatUGX(d.amt) + '</strong> to <strong>' + esc(d.name) + '</strong>.</p>' +
         '<div class="field" style="margin-top:12px"><label for="payout_ref">Transaction / Mobile Money Reference Code:</label>' +
         '<input type="text" id="payout_ref" value="MM-' + Date.now().toString(36).toUpperCase() + '" required>' +
         '</div>';

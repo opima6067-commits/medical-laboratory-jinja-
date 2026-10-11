@@ -76,6 +76,11 @@
     var p = t.split(':'), h = +p[0], m = p[1] || '00';
     return (h % 12 || 12) + ':' + m + ' ' + (h >= 12 ? 'PM' : 'AM');
   }
+  function formatUGX(amount) {
+    var value = Number(amount);
+    if (!Number.isFinite(value)) return 'UGX 0';
+    return 'UGX ' + value.toLocaleString('en-UG', { maximumFractionDigits: 0 });
+  }
   function today() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function daysUntil(iso) {
     var a = new Date(today() + 'T12:00:00'), b = new Date(String(iso).slice(0, 10) + 'T12:00:00');
@@ -344,7 +349,7 @@
   }
 
   MLS.UI = {
-    esc: esc, icon: icon, badge: badge, fmtDate: fmtDate, fmtShort: fmtShort, fmtTime: fmtTime, today: today, daysUntil: daysUntil, grade: grade, pct: pct, initials: initials,
+    esc: esc, icon: icon, badge: badge, fmtDate: fmtDate, fmtShort: fmtShort, fmtTime: fmtTime, formatUGX: formatUGX, today: today, daysUntil: daysUntil, grade: grade, pct: pct, initials: initials,
     emptyState: emptyState, alertBox: alertBox, downloadBlob: downloadBlob, toCSV: toCSV, makePdf: makePdf, sampleMaterialBlob: sampleMaterialBlob,
     toast: toast, Modal: Modal, confirm: confirmDialog, field: field, collect: collect, setFieldError: setFieldError, optHtml: optHtml,
     table: table, listPage: listPage, refreshList: refreshList, listState: listState, resetLists: resetLists, register: register, Actions: Actions, Q: Q

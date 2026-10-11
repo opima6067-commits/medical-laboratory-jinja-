@@ -48,9 +48,9 @@
     var quizBanner = activeQuiz ? (
       '<div class="card" style="border-left:4px solid var(--blue-500);background:linear-gradient(135deg, rgba(2,132,199,0.08), rgba(15,23,42,0.02));padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">' +
       '<div style="display:flex;align-items:center;gap:14px"><div style="font-size:2rem">🏆</div>' +
-      '<div><div style="display:flex;align-items:center;gap:8px"><span class="badge badge-amber" style="font-weight:700">ACTIVE PRIZE QUIZ</span><span class="badge badge-green" style="font-weight:700">💵 $50 1st Place Prize</span></div>' +
+      '<div><div style="display:flex;align-items:center;gap:8px"><span class="badge badge-amber" style="font-weight:700">ACTIVE PRIZE QUIZ</span><span class="badge badge-green" style="font-weight:700">' + UI.formatUGX(activeQuiz.firstPrize) + ' first prize</span></div>' +
       '<strong style="font-size:1.05rem;color:var(--text);display:block;margin-top:4px">' + esc(activeQuiz.title) + '</strong>' +
-      '<span class="muted small">' + esc(activeQuiz.category) + ' &bull; ' + activeQuiz.questions.length + ' Questions &bull; Cash Prizes & Leaderboard</span></div></div>' +
+      '<span class="muted small">' + esc(activeQuiz.category) + ' &bull; ' + activeQuiz.questions.length + ' Questions &bull; Prize rewards & Leaderboard</span></div></div>' +
       '<div style="display:flex;gap:10px;align-items:center">' +
       '<a class="btn btn-secondary btn-sm" href="#/student/leaderboard">' + icon('trophy') + ' Leaderboard</a>' +
       '<a class="btn btn-primary btn-sm" href="#/student/quiz?id=' + encodeURIComponent(activeQuiz.id) + '">Take Challenge &rarr;</a>' +
