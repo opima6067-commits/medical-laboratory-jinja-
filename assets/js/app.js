@@ -176,7 +176,8 @@
   /* ---------- rendering ---------- */
   function render() {
     var app = document.getElementById('app');
-    var parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } });
+    var hashPath = location.hash.replace(/^#\/?/, '').split('?')[0];
+    var parts = hashPath.split('/').filter(Boolean).map(function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } });
     var user = Auth.current();
     if (Store.session.get() && !user) { Store.session.clear(); }
     if (!user) {
@@ -283,7 +284,7 @@
         '</div>' +
         '<p class="muted small" style="margin:0">All fictional data created or modified is preserved in your device\'s local storage.</p>' +
         '</div>';
-      UI.dialog('Demonstration Portal Details', content, '<button type="button" class="btn" data-action="closeDlg">Got it</button>');
+      UI.Modal.open({ title: 'Demonstration Portal Details', body: content });
     }
   });
   function adminTable(title, cols, rows) {

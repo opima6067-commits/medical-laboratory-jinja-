@@ -22,7 +22,7 @@
   /* ---- Service Worker Registration & Updates ---- */
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js?v=20261011-3')
+      navigator.serviceWorker.register('sw.js?v=20261011-4')
         .then(function (reg) {
           reg.addEventListener('updatefound', function () {
             var newWorker = reg.installing;
@@ -105,8 +105,8 @@
         '</div>'
       );
 
-    if (window.MLS && window.MLS.UI && window.MLS.UI.dialog) {
-      window.MLS.UI.dialog('Install Standalone App', content, '<button type="button" class="btn" data-action="closeDlg">Got it</button>');
+    if (window.MLS && window.MLS.UI && window.MLS.UI.Modal) {
+      window.MLS.UI.Modal.open({ title: 'Install Standalone App', body: content });
     }
   }
 
@@ -132,4 +132,3 @@
   window.addEventListener('online', updateNetworkStatus);
   window.addEventListener('offline', updateNetworkStatus);
 })();
-

@@ -21,18 +21,21 @@
 
   /* ---------- Interactive Quiz Player ---------- */
   function renderQuizPlayer(quizId, user) {
-    var q = Quiz.get(quizId) || Quiz.list()[0];
+    var q = Quiz.get(quizId) || (!quizId ? Quiz.list()[0] : null);
     if (!q) {
       return MLS.App.pageHead('Quiz Not Found') + UI.alertBox('warn', 'The selected quiz is unavailable.') +
         '<p style="margin-top:14px"><a class="btn" href="#/' + user.role + '/leaderboard">Back to Leaderboard</a></p>';
     }
+    var stepMatch = /(?:\?|&)step=(\d+)/.exec(location.hash);
+    var requestedIndex = stepMatch ? parseInt(stepMatch[1], 10) : null;
+    if (requestedIndex !== null && requestedIndex >= q.questions.length) requestedIndex = q.questions.length - 1;
 
     // Initialize state if switching quizzes or first load
     if (activeSession.quizId !== q.id) {
       if (activeSession.timerId) clearInterval(activeSession.timerId);
       activeSession.quizId = q.id;
       activeSession.answers = {};
-      activeSession.currentIndex = 0;
+      activeSession.currentIndex = requestedIndex !== null ? requestedIndex : 0;
       activeSession.secondsLeft = q.durationMinutes * 60;
       activeSession.startTime = Date.now();
 
@@ -59,6 +62,8 @@
           submitQuiz(q.id, user, true);
         }
       }, 1000);
+    } else if (requestedIndex !== null) {
+      activeSession.currentIndex = requestedIndex;
     }
 
     var idx = activeSession.currentIndex;
@@ -153,10 +158,10 @@
         '<div class="alert alert-info" style="text-align:left;margin-bottom:18px">' + icon('info') +
         '<div><strong>Great Effort!</strong> You completed ' + result.correct + ' of ' + result.total + ' questions correctly in ' + Math.floor(elapsedSeconds / 60) + 'm ' + (elapsedSeconds % 60) + 's. Check the live rankings below!</div></div>'
       ) +
-      '<a href="#/' + user.role + '/leaderboard" class="btn btn-block" data-action="closeDlg">Open Live Leaderboard</a>' +
+      '<a href="#/' + user.role + '/leaderboard" class="btn btn-block" data-modal-close>Open Live Leaderboard</a>' +
       '</div>';
 
-    UI.dialog('Quiz Results', modalContent, '');
+    UI.Modal.open({ title: 'Quiz Results', body: modalContent });
     location.hash = '#/' + user.role + '/leaderboard';
   }
 
@@ -365,18 +370,16 @@
         '<div class="field" style="margin-top:12px"><label for="payout_ref">Transaction / Mobile Money Reference Code:</label>' +
         '<input type="text" id="payout_ref" value="MM-' + Date.now().toString(36).toUpperCase() + '" required>' +
         '</div>';
-      UI.dialog('Approve Prize Disbursal', promptHtml,
-        '<button type="button" class="btn btn-secondary" data-action="closeDlg">Cancel</button>' +
-        '<button type="button" class="btn btn-success" data-action="confirmDisburse" data-eid="' + d.eid + '">Approve & Disburse</button>'
-      );
-    },
-    confirmDisburse: function (d) {
-      var input = document.getElementById('payout_ref');
-      var ref = input ? input.value : 'MM-DISBURSED';
-      Quiz.markEarningsPaid(d.eid, ref);
-      UI.closeDialog();
-      UI.toast('Prize payment recorded successfully!', 'ok');
-      location.reload();
+      UI.Modal.open({
+        title: 'Approve Prize Disbursal',
+        body: promptHtml,
+        onSubmit: function (form) {
+          var input = form.querySelector('#payout_ref');
+          Quiz.markEarningsPaid(d.eid, input ? input.value.trim() : '');
+          UI.toast('Prize payment recorded successfully!', 'ok');
+          MLS.App.refresh();
+        }
+      });
     }
   });
 
