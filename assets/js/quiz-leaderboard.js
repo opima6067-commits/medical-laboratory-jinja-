@@ -245,11 +245,11 @@
       '</div></div>' +
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)">' +
       '<div><div style="font-size:0.75rem;color:#94a3b8">Paid via Mobile Money</div><div style="font-size:1.1rem;font-weight:700;color:#a7f3d0">$' + paidEarnings + '</div></div>' +
-      '<div><div style="font-size:0.75rem;color:#94a3b8">Pending Registrar Disbursal</div><div style="font-size:1.1rem;font-weight:700;color:#fde68a">$' + pendingEarnings + '</div></div>' +
+      '<div><div style="font-size:0.75rem;color:#94a3b8">Pending Admin Payment</div><div style="font-size:1.1rem;font-weight:700;color:#fde68a">$' + pendingEarnings + '</div></div>' +
       '<div><div style="font-size:0.75rem;color:#94a3b8">Payout Method</div><div style="font-size:0.95rem;font-weight:600;color:#e2e8f0">MTN Mobile Money</div></div>' +
       '</div></div>' : '';
 
-    var quizCtaCard =
+    var quizCtaCard = user.role === 'student' ?
       '<div class="card card-pad" style="margin-bottom:20px;border-left:4px solid var(--blue-600);background:#f0f9ff">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">' +
       '<div>' +
@@ -260,7 +260,7 @@
       '<div>' +
       '<a href="#/' + user.role + '/quiz/' + activeQuiz.id + '" class="btn" style="box-shadow:0 4px 14px rgba(2,132,199,0.3)">' +
       icon('flask') + ' Take Active Challenge Now</a>' +
-      '</div></div></div>';
+      '</div></div></div>' : '';
 
     return MLS.App.pageHead('Clinical Quiz Arena & Leadership', 'Weekly challenges and monthly olympiads with simulated prize tracking.') +
       earningsCard +
@@ -285,8 +285,14 @@
       '</table></div></div>';
   }
 
-  /* ---------- Registrar Quiz & Prize Payout Management ---------- */
-  function renderRegistrarLeaderboard(param, user) {
+  /* ---------- Admin Quiz & Prize Payment Management ---------- */
+  function renderAdminPrizeManagement(param, user) {
+    if (!user || user.role !== 'admin') {
+      return MLS.App.pageHead('Admin access required') +
+        UI.alertBox('error', 'Only administrators can approve quiz prize payments.') +
+        '<p style="margin-top:14px"><a class="btn" href="#/' + (user ? user.role : 'login') + '/dashboard">Return to dashboard</a></p>';
+    }
+
     var earnings = Quiz.getEarnings();
     var quizzes = Quiz.list();
 
@@ -306,7 +312,7 @@
         '</tr>';
     }).join('');
 
-    return MLS.App.pageHead('Quiz Competitions & Prize Disbursals', 'Manage weekly quiz challenges, leaderboards, and record simulated student prize payouts.') +
+    return MLS.App.pageHead('Admin Quiz Prize Payments', 'Administrators review quiz winners and record simulated prize payments.') +
       '<div class="grid grid-2" style="margin-bottom:20px">' +
       quizzes.map(function (q) {
         return '<div class="card card-pad">' +
@@ -317,12 +323,12 @@
           '<p class="muted small" style="margin:8px 0 12px">' + esc(q.description) + '</p>' +
           '<div style="display:flex;justify-content:space-between;align-items:center">' +
           '<span class="small muted">' + q.questions.length + ' questions &bull; ' + q.durationMinutes + ' mins</span>' +
-          '<a href="#/registrar/leaderboard" class="btn btn-sm btn-secondary">Review Submissions</a>' +
+          '<a href="#/admin/leaderboard" class="btn btn-sm btn-secondary">Review Submissions</a>' +
           '</div></div>';
       }).join('') +
       '</div>' +
       '<div class="card">' +
-      '<div class="card-head"><h3>Winner Prize Payout Queue</h3><span class="badge badge-amber">' + earnings.filter(function (e) { return e.status !== 'Paid'; }).length + ' Pending</span></div>' +
+      '<div class="card-head"><h3>Administrator Payment Queue</h3><span class="badge badge-amber">' + earnings.filter(function (e) { return e.status !== 'Paid'; }).length + ' Pending</span></div>' +
       '<div class="table-wrap"><table class="table">' +
       '<thead><tr><th>Student</th><th>Competition</th><th class="num">Prize Amount</th><th>Destination Account</th><th>Status</th><th class="actions">Action</th></tr></thead>' +
       '<tbody>' + (earningsRows || '<tr><td colspan="6" class="empty">No prize disbursals pending.</td></tr>') + '</tbody>' +
@@ -365,6 +371,11 @@
       activeSession.quizId = null;
     },
     disbursePrize: function (d) {
+      var user = MLS.Auth.current();
+      if (!user || user.role !== 'admin') {
+        UI.toast('Only administrators can approve quiz prize payments.', 'error');
+        return;
+      }
       var promptHtml =
         '<p>Confirm scholarship prize disbursal of <strong>$' + esc(d.amt) + ' USD</strong> to <strong>' + esc(d.name) + '</strong>.</p>' +
         '<div class="field" style="margin-top:12px"><label for="payout_ref">Transaction / Mobile Money Reference Code:</label>' +
@@ -374,8 +385,22 @@
         title: 'Approve Prize Disbursal',
         body: promptHtml,
         onSubmit: function (form) {
+          var currentUser = MLS.Auth.current();
+          if (!currentUser || currentUser.role !== 'admin') {
+            UI.toast('Only administrators can approve quiz prize payments.', 'error');
+            return false;
+          }
           var input = form.querySelector('#payout_ref');
-          Quiz.markEarningsPaid(d.eid, input ? input.value.trim() : '');
+          var reference = input ? input.value.trim() : '';
+          if (!reference) {
+            UI.toast('Enter the payment transaction reference before approval.', 'error');
+            if (input) input.focus();
+            return false;
+          }
+          if (!Quiz.markEarningsPaid(d.eid, reference)) {
+            UI.toast('The pending prize payment could not be found.', 'error');
+            return false;
+          }
           UI.toast('Prize payment recorded successfully!', 'ok');
           MLS.App.refresh();
         }
@@ -387,6 +412,6 @@
   window.MLS.QuizViews = {
     renderQuizPlayer: renderQuizPlayer,
     renderLeaderboardView: renderLeaderboardView,
-    renderRegistrarLeaderboard: renderRegistrarLeaderboard
+    renderAdminPrizeManagement: renderAdminPrizeManagement
   };
 })();
