@@ -282,7 +282,10 @@
 
 .content {
   flex: 1;
-  padding: 28px 24px calc(var(--bottombar-h) + var(--sab) + 24px);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 28px 24px 24px;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
@@ -312,7 +315,7 @@
 }
 
 .app-footer {
-  padding: 16px 24px calc(var(--bottombar-h) + var(--sab) + 16px);
+  padding: 16px 24px;
   font-size: 0.8125rem;
   color: var(--muted);
   border-top: 1px solid var(--border);
@@ -326,7 +329,7 @@
 
 /* ---- App Bottom Navigation Bar (PWA Standalone & Desktop/Mobile) ------------ */
 .app-bottom-nav, .mobile-bottom-nav {
-  display: flex;
+  display: none;
   position: fixed;
   left: var(--sidebar-w);
   right: 0;
@@ -390,6 +393,58 @@
   color: var(--blue-600);
   font-weight: 700;
 }
+.mobile-more-toggle {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+.mobile-more-toggle.is-current { color: var(--blue-600); }
+.mobile-more-toggle[aria-expanded="true"] { background: var(--blue-50); color: var(--blue-700); }
+.mobile-more-panel {
+  position: fixed;
+  right: 12px;
+  bottom: calc(var(--bottombar-h) + var(--sab) + 10px);
+  z-index: 70;
+  width: min(340px, calc(100vw - 24px));
+  max-height: min(64dvh, 560px);
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+}
+.mobile-more-panel[hidden] { display: none; }
+.mobile-more-head { padding: 8px 10px 12px; border-bottom: 1px solid var(--border); }
+.mobile-more-head strong, .mobile-more-head span { display: block; }
+.mobile-more-head strong { color: var(--navy-900); font-size: 0.9rem; }
+.mobile-more-head span { margin-top: 2px; color: var(--muted); font-size: 0.75rem; }
+.mobile-more-group {
+  padding: 12px 10px 5px;
+  color: var(--muted-light);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.mobile-more-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 9px 10px;
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 550;
+}
+.mobile-more-link:hover, .mobile-more-link[aria-current="page"] {
+  background: var(--blue-50);
+  color: var(--blue-700);
+  text-decoration: none;
+}
+.mobile-more-link .count { margin-left: auto; }
 .bottom-tab-item[aria-current="page"]::before, .mobile-tab-item[aria-current="page"]::before {
   content: "";
   position: absolute;
@@ -606,23 +661,29 @@
 
 /* ---- Responsive & Standalone Media Queries ----------------------------- */
 @media (max-width: 960px) {
-  .sidebar {
-    transform: translateX(-100%);
-    box-shadow: var(--shadow-lg);
-  }
-  .app.nav-open .sidebar { transform: none; }
-  .app.nav-open .sidebar-backdrop { display: block; }
+  .sidebar, .sidebar-backdrop { display: none; }
   .main { margin-left: 0; }
-  .app-bottom-nav, .mobile-bottom-nav { left: 0; }
-  .btn.menu-toggle { display: inline-flex; }
+  .app-bottom-nav, .mobile-bottom-nav { display: flex; left: 0; }
+  .btn.menu-toggle { display: none; }
   .topbar { padding-left: 14px; padding-right: 14px; }
   .content { padding: 18px 14px calc(var(--bottombar-h) + var(--sab) + 24px); }
+  .app-footer { padding: 16px 14px calc(var(--bottombar-h) + var(--sab) + 16px); }
   .topbar-period { display: none; }
   .login { grid-template-columns: 1fr; }
   .login-brand { padding: 32px 24px; gap: 20px; }
   .login-brand h1 { font-size: 1.6rem; margin-top: 14px; }
   .login-brand img, .login-brand svg { width: 54px; height: 54px; }
   .login-points { display: none; }
+}
+
+@media (max-width: 420px) {
+  .mobile-bottom-tabs { padding: 0 3px; }
+  .bottom-tab-item, .mobile-tab-item { font-size: 0.66rem; gap: 2px; }
+  .bottom-tab-item .icon, .mobile-tab-item .icon { width: 18px; height: 18px; }
+  .topbar { gap: 6px; }
+  .topbar-actions { gap: 4px; }
+  .topbar-actions > .demo-chip { display: none; }
+  .topbar-actions > .btn, .topbar-actions .menu-wrap > .btn { min-height: 36px; padding: 5px 8px; }
 }
 
 /* Standalone PWA Specific Tweaks */
@@ -638,4 +699,3 @@
     -webkit-user-select: auto;
   }
 }
-

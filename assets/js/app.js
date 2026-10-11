@@ -65,32 +65,28 @@
       { page: 'courses', label: 'Courses', icon: 'book' },
       { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'exams', label: 'Exams', icon: 'calendar' },
-      { page: 'results', label: 'Results', icon: 'award' },
-      { page: 'notifications', label: 'Alerts', icon: 'bell', badge: true }
+      { page: 'results', label: 'Results', icon: 'award' }
     ],
     tutor: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'courses', label: 'Courses', icon: 'book' },
       { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'manage', label: 'Materials', icon: 'file' },
-      { page: 'exams', label: 'Exams', icon: 'calendar' },
-      { page: 'notifications', label: 'Alerts', icon: 'bell', badge: true }
+      { page: 'exams', label: 'Exams', icon: 'calendar' }
     ],
     registrar: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'students', label: 'Students', icon: 'cap' },
-      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
       { page: 'results', label: 'Results', icon: 'award' },
       { page: 'import', label: 'Import', icon: 'upload' },
-      { page: 'announcements', label: 'News', icon: 'megaphone', badge: true }
+      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' }
     ],
     admin: [
       { page: 'dashboard', label: 'Dashboard', icon: 'home' },
       { page: 'users', label: 'Users', icon: 'users' },
-      { page: 'leaderboard', label: 'Quizzes', icon: 'trophy' },
+      { page: 'students', label: 'Students', icon: 'cap' },
       { page: 'courses', label: 'Courses', icon: 'book' },
-      { page: 'settings', label: 'Settings', icon: 'settings' },
-      { page: 'announcements', label: 'News', icon: 'megaphone', badge: true }
+      { page: 'leaderboard', label: 'Payments', icon: 'trophy' }
     ]
   };
 
@@ -115,12 +111,28 @@
         (it.badge && unread ? '<span class="tab-badge">' + unread + '</span>' : '') +
         '</a>';
     }).join('');
-    var bottomNav = '<nav class="app-bottom-nav mobile-bottom-nav" aria-label="Portal bottom navigation"><div class="bottom-nav-tabs mobile-bottom-tabs">' + bTabs + '</div></nav>';
+    var bottomPages = (BOTTOM_NAV[user.role] || []).map(function (tab) { return tab.page; });
+    var mobileMoreItems = '', pendingGroup = '';
+    items.forEach(function (it) {
+      if (it.group) { pendingGroup = it.group; return; }
+      if (bottomPages.indexOf(it.page) !== -1) return;
+      if (pendingGroup) {
+        mobileMoreItems += '<div class="mobile-more-group">' + esc(pendingGroup) + '</div>';
+        pendingGroup = '';
+      }
+      var cur = it.page === navPage ? ' aria-current="page"' : '';
+      mobileMoreItems += '<a class="mobile-more-link" href="' + base + it.page + '"' + cur + '>' + icon(it.icon) + '<span>' + esc(it.label) + '</span>' +
+        (it.badge && unread ? '<span class="count">' + unread + '</span>' : '') + '</a>';
+    });
+    var bottomNav = '<div class="mobile-more-panel" id="mobile-more-panel" hidden><div class="mobile-more-head"><strong>All ' + esc(ROLE_LABEL[user.role]) + ' pages</strong><span>More workspace links</span></div><nav aria-label="More ' + esc(ROLE_LABEL[user.role]) + ' pages">' + mobileMoreItems + '</nav></div>' +
+      '<nav class="app-bottom-nav mobile-bottom-nav" aria-label="Portal bottom navigation"><div class="bottom-nav-tabs mobile-bottom-tabs">' + bTabs +
+      '<button type="button" class="bottom-tab-item mobile-tab-item mobile-more-toggle' + ((BOTTOM_NAV[user.role] || []).some(function (it) { return it.page === navPage; }) ? '' : ' is-current') + '" data-action="toggleMobileMore" aria-controls="mobile-more-panel" aria-expanded="false">' +
+      icon('menu') + '<span>More</span></button></div></nav>';
 
     var online = typeof navigator !== 'undefined' && 'onLine' in navigator ? navigator.onLine : true;
     var canInstall = window.MLS_PWA && window.MLS_PWA.canInstall && !window.MLS_PWA.isStandalone;
 
-    return '<div class="app" id="app-root"><a class="skip-link" href="#main">Skip to main content</a>' +
+    return '<div class="app" id="app-root" data-role="' + esc(user.role) + '"><a class="skip-link" href="#main">Skip to main content</a>' +
       '<aside class="sidebar" id="sidebar" aria-label="Main navigation">' +
       '<a class="sidebar-brand" href="' + base + 'dashboard"><img src="assets/images/institution-logo-placeholder.svg" alt="Institution Crest"><div><strong>' + esc(Store.state.settings.institutionName) + '</strong><span>Academic Management Portal</span></div></a>' +
       '<div class="sidebar-role">' + icon('user') + '<span>Signed in as <strong>' + ROLE_LABEL[user.role] + '</strong></span></div>' +
@@ -227,9 +239,25 @@
     var m = document.getElementById('user-menu'); if (!m || m.hidden) return;
     m.hidden = true; var b = document.getElementById('user-menu-btn'); if (b) b.setAttribute('aria-expanded', 'false');
   }
+  function closeMobileMore() {
+    var panel = document.getElementById('mobile-more-panel');
+    var button = document.querySelector('.mobile-more-toggle');
+    if (panel) panel.hidden = true;
+    if (button) button.setAttribute('aria-expanded', 'false');
+  }
   UI.register({
     toggleNav: function (d, el) { var r = document.getElementById('app-root'); var open = r.classList.toggle('nav-open'); el.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) { var l = r.querySelector('.nav-link'); if (l) l.focus(); } },
     closeNav: closeNav,
+    toggleMobileMore: function (d, el) {
+      var panel = document.getElementById('mobile-more-panel');
+      if (!panel) return;
+      var open = panel.hidden;
+      closeMobileMore();
+      if (open) {
+        panel.hidden = false;
+        el.setAttribute('aria-expanded', 'true');
+      }
+    },
     toggleMenu: function (d, el) { var m = document.getElementById('user-menu'); m.hidden = !m.hidden; el.setAttribute('aria-expanded', m.hidden ? 'false' : 'true'); },
     logout: function () { Auth.logout(); closeMenu(); redirect('login'); },
     pickRole: function (d) {
@@ -289,8 +317,10 @@
   });
   function adminTable(title, cols, rows) {
     var headings = cols.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('');
-    var body = rows.map(function (row) { return '<tr>' + row.map(function (cell) { return '<td>' + esc(cell) + '</td>'; }).join('') + '</tr>'; }).join('');
-    return '<div class="card" style="padding:0;overflow:hidden;margin-top:16px"><div style="padding:16px 20px;border-bottom:1px solid var(--border, #dfe5ec)"><strong>' + esc(title) + '</strong></div><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;min-width:420px"><thead><tr>' + headings + '</tr></thead><tbody>' + body + '</tbody></table></div></div>';
+    var body = rows.map(function (row) {
+      return '<tr>' + row.map(function (cell, index) { return '<td data-label="' + esc(cols[index]) + '">' + esc(cell) + '</td>'; }).join('') + '</tr>';
+    }).join('');
+    return '<div class="card admin-data-card"><div class="card-head"><h3>' + esc(title) + '</h3></div><div class="table-wrap"><table class="table admin-data-table"><thead><tr>' + headings + '</tr></thead><tbody>' + body + '</tbody></table></div></div>';
   }
 
   defineRoute('admin', 'dashboard', {
@@ -303,9 +333,9 @@
         { ic: 'book', value: courses, label: 'Courses', href: '#/admin/courses' },
         { ic: 'layers', value: programmes, label: 'Programmes', href: '#/admin/programmes' }
       ];
-      var grid = cards.map(function (c) { return '<a class="card stat" href="' + c.href + '" style="text-decoration:none;color:inherit"><div class="stat-ic">' + icon(c.ic) + '</div><div><div class="stat-val">' + esc(c.value) + '</div><div class="stat-label">' + esc(c.label) + '</div></div></a>'; }).join('');
-      return pageHead('Admin Dashboard', 'System overview for institutional operations and demo controls.') + '<div class="stat-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">' + grid + '</div>' +
-        '<div class="card" style="margin-top:16px;padding:18px"><strong>Administration notes</strong><p class="muted" style="margin:8px 0 0">This demo keeps a single login screen but now recognises the administrative role and exposes the same protected-area flow used by other roles. Production authentication remains simulated and never stores real credentials.</p></div>';
+      var grid = cards.map(function (c) { return '<a class="card stat admin-stat" href="' + c.href + '"><div class="stat-ic">' + icon(c.ic) + '</div><div><div class="stat-val">' + esc(c.value) + '</div><div class="stat-label">' + esc(c.label) + '</div></div>' + icon('chevron') + '</a>'; }).join('');
+      return pageHead('Admin Dashboard', 'System overview for institutional operations and demo controls.') + '<div class="grid admin-stat-grid">' + grid + '</div>' +
+        '<div class="card card-pad admin-notice"><div class="stat-ic">' + icon('info') + '</div><div><strong>Administration notes</strong><p class="muted">This demo keeps a single login screen but now recognises the administrative role and exposes the same protected-area flow used by other roles. Production authentication remains simulated and never stores real credentials.</p></div></div>';
     }
   });
 
@@ -413,9 +443,11 @@
   document.addEventListener('click', function (e) {
     if (!e.target.closest('.menu-wrap')) closeMenu();
     if (e.target.closest('.sidebar .nav-link, .sidebar-brand')) closeNav();
+    if (!e.target.closest('.mobile-more-panel, .mobile-more-toggle')) closeMobileMore();
+    if (e.target.closest('.mobile-more-panel .mobile-more-link')) closeMobileMore();
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closeMenu(); closeNav(); }
+    if (e.key === 'Escape') { closeMenu(); closeNav(); closeMobileMore(); }
   });
 
   window.addEventListener('hashchange', render);

@@ -41,6 +41,7 @@ The portal is a full-featured Standalone Progressive Web App (PWA):
 - **Desktop (Chrome/Edge/Brave):** Click the "Install App" button in the portal header or the browser install icon in the address bar. Runs in a dedicated standalone window with window-controls-overlay support.
 - **Android:** Tap the "Install App" button or browser menu > **Install app**. Launches fullscreen like a native Android app with bottom navigation.
 - **iOS Safari:** Tap the **Share** button > **Add to Home Screen**. Adapts to iPhone/iPad safe area notches and bottom home indicators.
+- **Responsive navigation:** Phones and tablets use bottom navigation with additional pages under **More**; desktop screens use the persistent side navigation only.
 - **Offline operation:** The service worker pre-caches all stylesheets, JavaScript modules, templates, and icons. Active network status is monitored in real-time in the header.
 
 ## Technology

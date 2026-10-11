@@ -122,6 +122,45 @@
 }
 .stat-label { font-size: 0.8125rem; color: var(--muted); margin-top: 2px; }
 
+.admin-stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.admin-stat {
+  min-height: 104px;
+  text-decoration: none;
+  color: inherit;
+  border-color: #dbe5ef;
+  box-shadow: 0 2px 8px rgba(10, 31, 61, 0.045);
+}
+.admin-stat:hover {
+  border-color: #7dd3fc;
+  color: inherit;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.admin-stat > .icon { margin-left: auto; color: #94a3b8; }
+.admin-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 20px;
+  background: linear-gradient(120deg, #fff 0%, #f0f9ff 100%);
+  border-color: #dbeafe;
+}
+.admin-notice .stat-ic { width: 40px; height: 40px; border-radius: 10px; }
+.admin-notice p { margin: 5px 0 0; max-width: 850px; }
+.admin-data-card { margin-top: 16px; overflow: hidden; }
+.admin-data-card .card-head { background: #fbfdff; }
+.admin-data-table { min-width: 520px; }
+.admin-payment-table { min-width: 820px; }
+.admin-quiz-card-head { gap: 12px; }
+.admin-quiz-card-head > div:first-child { min-width: 0; }
+.admin-quiz-pool {
+  flex: none;
+  white-space: nowrap;
+  font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+  line-height: 1.2;
+}
+
 .hero {
   background: var(--navy-950);
   color: #fff;
@@ -221,6 +260,16 @@
   .table td[data-label=""]::before { display: none; }
   .table td.actions { justify-content: flex-end; padding-top: 10px; }
   .table .num { text-align: right; }
+}
+@media (max-width: 800px) {
+  .admin-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .admin-stat-grid { grid-template-columns: 1fr; gap: 12px; }
+  .admin-stat { min-height: 86px; }
+  .admin-notice { padding: 16px; }
+  .admin-quiz-card-head { flex-direction: column; align-items: flex-start !important; }
+  .admin-quiz-pool { font-size: 1.1rem; }
 }
 
 /* ---- Toolbar, Pager, Tabs ------------------------------------------------ */

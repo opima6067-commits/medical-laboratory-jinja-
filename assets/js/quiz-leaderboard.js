@@ -303,23 +303,23 @@
         '<button type="button" class="btn btn-sm btn-success" data-action="disbursePrize" data-eid="' + e.id + '" data-name="' + esc(e.studentName) + '" data-amt="' + e.amount + '">' + icon('award') + ' Disburse $' + e.amount + '</button>';
 
       return '<tr>' +
-        '<td><strong>' + esc(e.studentName) + '</strong><span class="cell-sub">' + esc(e.regNo) + '</span></td>' +
-        '<td>' + esc(e.quizTitle) + '</td>' +
-        '<td class="num"><strong style="color:var(--green-700)">$' + e.amount + ' USD</strong></td>' +
-        '<td>' + esc(e.method) + '</td>' +
-        '<td>' + (isPaid ? '<span class="badge badge-green">Disbursed</span>' : '<span class="badge badge-amber">Pending Approval</span>') + '</td>' +
-        '<td class="actions">' + payAction + '</td>' +
+        '<td data-label="Student"><strong>' + esc(e.studentName) + '</strong><span class="cell-sub">' + esc(e.regNo) + '</span></td>' +
+        '<td data-label="Competition">' + esc(e.quizTitle) + '</td>' +
+        '<td data-label="Prize Amount" class="num"><strong style="color:var(--green-700)">$' + e.amount + ' USD</strong></td>' +
+        '<td data-label="Destination Account">' + esc(e.method) + '</td>' +
+        '<td data-label="Status">' + (isPaid ? '<span class="badge badge-green">Disbursed</span>' : '<span class="badge badge-amber">Pending Approval</span>') + '</td>' +
+        '<td data-label="" class="actions">' + payAction + '</td>' +
         '</tr>';
     }).join('');
 
     return MLS.App.pageHead('Admin Quiz Prize Payments', 'Administrators review quiz winners and record simulated prize payments.') +
-      '<div class="grid grid-2" style="margin-bottom:20px">' +
+      '<div class="grid grid-2 admin-quiz-grid" style="margin-bottom:20px">' +
       quizzes.map(function (q) {
-        return '<div class="card card-pad">' +
-          '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+        return '<div class="card card-pad admin-quiz-card">' +
+          '<div class="admin-quiz-card-head" style="display:flex;justify-content:space-between;align-items:flex-start">' +
           '<div><span class="badge badge-blue">' + esc(q.type.toUpperCase()) + '</span>' +
           '<h3 style="margin-top:6px">' + esc(q.title) + '</h3></div>' +
-          '<div class="stat-val" style="color:var(--green-700)">' + esc(q.prizePool) + '</div></div>' +
+          '<div class="stat-val admin-quiz-pool" style="color:var(--green-700)">' + esc(q.prizePool) + '</div></div>' +
           '<p class="muted small" style="margin:8px 0 12px">' + esc(q.description) + '</p>' +
           '<div style="display:flex;justify-content:space-between;align-items:center">' +
           '<span class="small muted">' + q.questions.length + ' questions &bull; ' + q.durationMinutes + ' mins</span>' +
@@ -329,7 +329,7 @@
       '</div>' +
       '<div class="card">' +
       '<div class="card-head"><h3>Administrator Payment Queue</h3><span class="badge badge-amber">' + earnings.filter(function (e) { return e.status !== 'Paid'; }).length + ' Pending</span></div>' +
-      '<div class="table-wrap"><table class="table">' +
+      '<div class="table-wrap"><table class="table admin-payment-table">' +
       '<thead><tr><th>Student</th><th>Competition</th><th class="num">Prize Amount</th><th>Destination Account</th><th>Status</th><th class="actions">Action</th></tr></thead>' +
       '<tbody>' + (earningsRows || '<tr><td colspan="6" class="empty">No prize disbursals pending.</td></tr>') + '</tbody>' +
       '</table></div></div>';

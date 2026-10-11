@@ -22,7 +22,7 @@
   /* ---- Service Worker Registration & Updates ---- */
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js?v=20261011-5')
+      navigator.serviceWorker.register('sw.js?v=20261011-6')
         .then(function (reg) {
           reg.addEventListener('updatefound', function () {
             var newWorker = reg.installing;
