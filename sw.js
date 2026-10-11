@@ -2,7 +2,7 @@
    sw.js - Service Worker for MLS Portal Standalone Progressive Web App
    Enables offline operation, asset caching, and standalone installation.
    ========================================================================== */
-var CACHE = 'mls-portal-v11-mobile-scroll-fix';
+var CACHE = 'mls-portal-v12-mobile-page-scroll';
 var FILES = [
   './',
   'index.html',

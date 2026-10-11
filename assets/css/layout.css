@@ -664,12 +664,32 @@
 
 /* ---- Responsive & Standalone Media Queries ----------------------------- */
 @media (max-width: 960px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  #app, .app {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
   .sidebar, .sidebar-backdrop { display: none; }
-  .main { margin-left: 0; }
+  .main {
+    height: auto;
+    min-height: 100dvh;
+    margin-left: 0;
+    overflow: visible;
+  }
   .app-bottom-nav, .mobile-bottom-nav { display: flex; left: 0; }
   .btn.menu-toggle { display: none; }
   .topbar { padding-left: 14px; padding-right: 14px; }
-  .content { padding: 18px 14px calc(var(--bottombar-h) + var(--sab) + 24px); }
+  .content {
+    flex: 0 0 auto;
+    overflow: visible;
+    padding: 18px 14px calc(var(--bottombar-h) + var(--sab) + 24px);
+  }
   .app-footer { display: none; }
   .topbar-period { display: none; }
   .login { grid-template-columns: 1fr; }
