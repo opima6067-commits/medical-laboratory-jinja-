@@ -238,7 +238,7 @@
 .badge-blue { background: #f0f9ff; color: var(--blue-700); border-color: #bae6fd; }
 
 /* ---- Tables ------------------------------------------------------------ */
-.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 .table th {
   text-align: left; font-size: 0.78rem; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;
   padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid var(--border); white-space: nowrap;
@@ -396,9 +396,11 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   margin: 28px auto 20px;
   max-width: 640px;
   padding: 0 10px;
+  min-width: 0;
 }
 .podium-col {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -408,6 +410,7 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   border: 1.5px solid;
   position: relative;
   transition: transform 0.2s ease;
+  overflow-wrap: anywhere;
 }
 .podium-col:hover { transform: translateY(-4px); }
 .podium-col.place-1 {
@@ -437,14 +440,15 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   position: absolute; bottom: -6px; right: -6px; font-size: 1.5rem;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
-.podium-details { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.podium-name { font-size: 0.95rem; color: var(--navy-900); font-weight: 700; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.podium-details { min-width: 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.podium-name { max-width: 100%; font-size: clamp(0.78rem, 2.5vw, 0.95rem); color: var(--navy-900); font-weight: 700; overflow-wrap: anywhere; }
 .podium-points { font-size: 0.8125rem; font-weight: 700; color: var(--blue-700); }
 .podium-time { font-size: 0.72rem; color: var(--muted); }
 .podium-prize-pill {
-  margin-top: 4px; padding: 2px 10px; background: var(--green-700); color: #fff;
-  font-size: 0.72rem; font-weight: 700; border-radius: var(--r-full);
+  max-width: 100%; margin-top: 4px; padding: 2px 10px; background: var(--green-700); color: #fff;
+  font-size: clamp(0.62rem, 2vw, 0.72rem); font-weight: 700; border-radius: var(--r-full);
   box-shadow: 0 2px 6px rgba(4, 120, 87, 0.25);
+  overflow-wrap: anywhere;
 }
 .podium-pedestal {
   margin-top: 10px; font-size: 1.4rem; font-weight: 900; color: rgba(15, 23, 42, 0.25);
@@ -461,11 +465,11 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
 /* ---- Modern Quiz Arena ------------------------------------------------- */
 .quiz-wallet {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(min(260px, 40%), 0.8fr);
   gap: 18px;
   margin-bottom: 18px;
   padding: 22px;
-  overflow: hidden;
+  min-width: 0;
   color: #fff;
   border: 1px solid rgba(125, 211, 252, 0.16);
   border-radius: var(--r-lg);
@@ -474,7 +478,7 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
     linear-gradient(135deg, #0b2547 0%, #06111f 100%);
   box-shadow: 0 12px 26px rgba(6, 17, 31, 0.13);
 }
-.quiz-wallet-main { display: flex; flex-direction: column; align-items: flex-start; }
+.quiz-wallet-main { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; }
 .quiz-wallet-label {
   display: flex;
   align-items: center;
@@ -493,14 +497,16 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   color: #e0f2fe;
   font-size: 0.62rem;
 }
-.quiz-wallet-main p { margin: 8px 0 10px; color: #cbd5e1; font-size: 0.84rem; }
+.quiz-wallet-main p { max-width: 100%; margin: 8px 0 10px; color: #cbd5e1; font-size: clamp(0.78rem, 2.5vw, 0.84rem); overflow-wrap: anywhere; }
 .quiz-wallet-total {
+  max-width: 100%;
   color: #fff;
   font-size: clamp(1.7rem, 4vw, 2.25rem);
   font-weight: 780;
   letter-spacing: -0.04em;
   line-height: 1.15;
   font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }
 .quiz-wallet-caption { margin-top: 3px; color: #94a3b8; font-size: 0.75rem; }
 .quiz-wallet-details { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: center; }
@@ -515,7 +521,7 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   background: rgba(255, 255, 255, 0.06);
 }
 .quiz-wallet-detail span { color: #cbd5e1; font-size: 0.75rem; }
-.quiz-wallet-detail strong { color: #fff; font-size: clamp(0.95rem, 2vw, 1.2rem); font-variant-numeric: tabular-nums; }
+.quiz-wallet-detail strong { color: #fff; font-size: clamp(0.82rem, 2vw, 1.2rem); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .quiz-feature {
   display: flex;
   align-items: center;
@@ -540,8 +546,8 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   text-transform: uppercase;
 }
 .quiz-feature-label .icon { width: 17px; height: 17px; }
-.quiz-feature h2 { margin-top: 8px; font-size: 1.15rem; }
-.quiz-feature p { max-width: 760px; margin: 5px 0 12px; color: var(--muted); font-size: 0.85rem; }
+.quiz-feature h2 { margin-top: 8px; font-size: clamp(1rem, 2.5vw, 1.15rem); overflow-wrap: anywhere; }
+.quiz-feature p { max-width: 760px; margin: 5px 0 12px; color: var(--muted); font-size: clamp(0.78rem, 2.3vw, 0.85rem); overflow-wrap: anywhere; }
 .quiz-feature-meta { display: flex; flex-wrap: wrap; gap: 8px; }
 .quiz-feature-meta span {
   display: inline-flex;
@@ -554,13 +560,16 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 600;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .quiz-feature-meta .icon { width: 14px; height: 14px; }
 .quiz-feature-meta .quiz-feature-prize { border-color: #a7f3d0; color: var(--green-700); }
-.quiz-feature-action { flex: none; white-space: nowrap; }
+.quiz-feature-action { flex: none; white-space: normal; text-align: center; }
 .leaderboard-card { overflow: hidden; }
 .leaderboard-header {
   display: flex;
+  min-width: 0;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
@@ -576,6 +585,7 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
 .leaderboard-header h2 { margin-top: 3px; font-size: 1.1rem; }
 .leaderboard-prize {
   flex: none;
+  max-width: 100%;
   padding: 6px 10px;
   border: 1px solid #a7f3d0;
   border-radius: var(--r-full);
@@ -583,6 +593,7 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   color: var(--green-700);
   font-size: 0.75rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 .leaderboard-tabs {
   display: grid;
@@ -606,6 +617,7 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
+.leaderboard-tab, .leaderboard-tab * { overflow-wrap: anywhere; }
 .leaderboard-tab span { font-size: 0.85rem; font-weight: 700; }
 .leaderboard-tab small { color: var(--muted); font-size: 0.7rem; }
 .leaderboard-tab:hover, .leaderboard-tab.is-active {
@@ -670,8 +682,8 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
 .quiz-opt-text { font-size: 0.95rem; font-weight: 500; color: var(--text); }
 
 @media (max-width: 520px) {
-  .quiz-wallet { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
-  .quiz-wallet-details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quiz-wallet { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 18px; }
+  .quiz-wallet-details { grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); }
   .quiz-wallet-detail { padding: 11px; }
   .quiz-feature { align-items: stretch; flex-direction: column; gap: 14px; padding: 18px; }
   .quiz-feature-action { width: 100%; }
@@ -681,19 +693,51 @@ details.faq summary { cursor: pointer; font-weight: 600; min-height: 32px; color
   .leaderboard-tab span { font-size: 0.8rem; }
   .leaderboard-tab small { font-size: 0.64rem; }
   .leaderboard-body { padding: 0 10px 8px; }
-  .leaderboard-podium { gap: 7px; margin: 16px auto 8px; padding: 0; }
-  .leaderboard-podium .podium-col { height: 160px !important; padding: 12px 5px 8px; border-radius: 14px 14px 8px 8px; }
-  .leaderboard-podium .podium-col.place-1 { height: 184px !important; }
+  .leaderboard-podium {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 10px;
+    max-width: none;
+    margin: 16px 0 8px;
+    padding: 0;
+  }
+  .leaderboard-podium .podium-col {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: start;
+    gap: 10px;
+    width: 100%;
+    height: auto !important;
+    min-height: 88px;
+    padding: 12px;
+    border-radius: 14px;
+    order: 0;
+  }
+  .leaderboard-podium .podium-col.place-1 { order: 0; }
+  .leaderboard-podium .podium-col.place-2 { order: 1; }
+  .leaderboard-podium .podium-col.place-3 { order: 2; }
+  .leaderboard-podium .podium-avatar-wrap { margin: 0; }
   .leaderboard-podium .avatar-podium { width: 42px; height: 42px; font-size: 0.95rem; }
-  .leaderboard-podium .podium-medal { font-size: 1.15rem; }
-  .leaderboard-podium .podium-name { max-width: 98px; font-size: 0.76rem; }
-  .leaderboard-podium .podium-points { font-size: 0.68rem; }
-  .leaderboard-podium .podium-time { font-size: 0.64rem; }
-  .leaderboard-podium .podium-prize-pill { padding: 2px 6px; font-size: 0.59rem; }
-  .leaderboard-podium .podium-pedestal { margin-top: 4px; font-size: 1.05rem; }
+  .leaderboard-podium .podium-medal { right: -7px; bottom: -5px; font-size: 1.1rem; }
+  .leaderboard-podium .podium-details { align-items: flex-start; gap: 2px; text-align: left; }
+  .leaderboard-podium .podium-name { max-width: 100%; font-size: clamp(0.78rem, 3.4vw, 0.9rem); white-space: normal; }
+  .leaderboard-podium .podium-points { font-size: 0.7rem; }
+  .leaderboard-podium .podium-time { font-size: 0.66rem; }
+  .leaderboard-podium .podium-prize-pill { padding: 4px 8px; font-size: clamp(0.6rem, 2.5vw, 0.68rem); text-align: center; }
+  .leaderboard-podium .podium-pedestal { margin: 0; font-size: 1rem; }
   .leaderboard-table { min-width: 0; }
   .leaderboard-table tr { padding: 12px 14px; }
   .leaderboard-table td { align-items: center; }
+  .leaderboard-table td[data-label="Rank"] { justify-content: flex-start; }
   .leaderboard-table td[data-label="Competitor"] { align-items: flex-start; }
   .leaderboard-table td[data-label="Prize"] { align-items: flex-start; }
+}
+
+@media (min-width: 521px) and (max-width: 800px) {
+  .quiz-wallet { grid-template-columns: minmax(0, 1fr); }
+  .quiz-wallet-details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quiz-feature { align-items: flex-start; flex-direction: column; }
+  .quiz-feature-action { width: 100%; }
 }

@@ -219,7 +219,7 @@
         '<span class="badge badge-blue">' + esc(e.prizeStatus) + '</span>';
 
       return '<tr class="' + (isMe ? 'row-highlight' : '') + '">' +
-        '<td data-label="Rank" style="font-weight:700;width:60px;font-size:1rem"><span class="rank-num rank-' + e.rank + '">#' + e.rank + '</span></td>' +
+        '<td data-label="Rank" style="font-weight:700;font-size:1rem"><span class="rank-num rank-' + e.rank + '">#' + e.rank + '</span></td>' +
         '<td data-label="Competitor"><div style="display:flex;align-items:center;gap:10px">' +
         '<span class="avatar" style="width:34px;height:34px;font-size:.78rem">' + esc(initials) + '</span>' +
         '<div><strong>' + esc(e.studentName) + '</strong>' + (isMe ? ' <span class="badge badge-amber" style="font-size:0.65rem">YOU</span>' : '') +
